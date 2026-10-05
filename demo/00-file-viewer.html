@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -125,7 +125,7 @@
             box-sizing: border-box !important;
         }
 
-        /* Floating Action Dock (ปุ่มแบบลอย) */
+        /* Floating Action Dock */
         .floating-dock {
             position: fixed;
             bottom: 24px;
@@ -424,7 +424,7 @@
         <!-- Top Navigation & File Telemetry -->
         <header class="top-navbar">
             <div class="brand-section">
-                <a href="index.html" class="back-link">← กลับ Demo Hub</a>
+                <a href="index.html" class="back-link">← Back to Demo Hub</a>
                 <span class="brand-title">⚡ Hideko File Viewer</span>
             </div>
 
@@ -433,7 +433,7 @@
                 <span>•</span>
                 <span id="fileSizeDisplay">1.2 KB</span>
                 <span>•</span>
-                <span id="fileLinesDisplay">48 บรรทัด</span>
+                <span id="fileLinesDisplay">48 lines</span>
                 <span>•</span>
                 <span class="stat-badge" id="renderTimeDisplay">⚡ 0.0 ms</span>
                 <span>•</span>
@@ -450,13 +450,13 @@
     <!-- Hidden File Input -->
     <input type="file" id="fileInput" style="display: none;">
 
-    <!-- Floating Action Buttons (ปุ่มลอยสำหรับเปิดไฟล์และตั้งค่า) -->
+    <!-- Floating Action Buttons -->
     <div class="floating-dock">
-        <button class="btn-floating-open" id="btnOpenFile" title="เปิดไฟล์จากเครื่อง (Ctrl+O / ⌘O)">
+        <button class="btn-floating-open" id="btnOpenFile" title="Open local file (Ctrl+O / ⌘O)">
             <span>📂</span>
-            <span>เปิดไฟล์</span>
+            <span>Open File</span>
         </button>
-        <button class="btn-floating-settings" id="btnToggleSettings" title="การตั้งค่า Hideko">
+        <button class="btn-floating-settings" id="btnToggleSettings" title="Hideko Settings">
             <span>⚙️</span>
         </button>
     </div>
@@ -466,30 +466,30 @@
         <div class="panel-header">
             <div class="panel-title">
                 <span>⚙️</span>
-                <span>การตั้งค่า Hideko</span>
+                <span>Hideko Settings</span>
             </div>
             <button class="btn-close-panel" id="btnCloseSettings">✕</button>
         </div>
 
         <!-- Theme Selector -->
         <div class="setting-group">
-            <label class="setting-label" for="themeSelect">Theme (ชุดรูปแบบ)</label>
+            <label class="setting-label" for="themeSelect">Theme</label>
             <select id="themeSelect" class="setting-control">
-                <option value="dark" selected>Dark (ค่าเริ่มต้น)</option>
+                <option value="dark" selected>Dark (Default)</option>
                 <option value="github-dark">GitHub Dark</option>
                 <option value="dracula">Dracula</option>
                 <option value="one-dark">One Dark</option>
                 <option value="nord">Nord</option>
                 <option value="monokai">Monokai</option>
-                <option value="light">Light (สว่าง)</option>
+                <option value="light">Light</option>
             </select>
         </div>
 
         <!-- Language Override -->
         <div class="setting-group">
-            <label class="setting-label" for="langSelect">Language (ภาษา)</label>
+            <label class="setting-label" for="langSelect">Language</label>
             <select id="langSelect" class="setting-control">
-                <option value="auto">🔍 ตรวจจับอัตโนมัติ (Auto-detect)</option>
+                <option value="auto">🔍 Auto-detect</option>
                 <option value="javascript">JavaScript (js, mjs)</option>
                 <option value="typescript">TypeScript (ts, tsx)</option>
                 <option value="python">Python (py)</option>
@@ -517,7 +517,7 @@
         <div class="switch-row">
             <div>
                 <div class="switch-title">Line Numbers</div>
-                <div class="switch-desc">แสดงหมายเลขบรรทัด</div>
+                <div class="switch-desc">Show line numbers gutter</div>
             </div>
             <label class="toggle-switch">
                 <input type="checkbox" id="chkLineNumbers" checked>
@@ -527,13 +527,13 @@
 
         <!-- Line Highlighting Input -->
         <div class="setting-group">
-            <label class="setting-label" for="inputHighlight">Highlight Lines (เน้นบรรทัด)</label>
-            <input type="text" id="inputHighlight" class="setting-control" placeholder="เช่น 3, 7-10, 15" value="4-7, 18-20">
+            <label class="setting-label" for="inputHighlight">Highlight Lines</label>
+            <input type="text" id="inputHighlight" class="setting-control" placeholder="e.g. 3, 7-10, 15" value="4-7, 18-20">
         </div>
 
         <!-- Start Line Offset -->
         <div class="setting-group">
-            <label class="setting-label" for="inputStartLine">Start Line (เลขเริ่มต้น)</label>
+            <label class="setting-label" for="inputStartLine">Start Line</label>
             <input type="number" id="inputStartLine" class="setting-control" min="1" value="1">
         </div>
 
@@ -541,16 +541,16 @@
         <div class="setting-group">
             <label class="setting-label" for="virtualModeSelect">Virtual Scroll Engine</label>
             <select id="virtualModeSelect" class="setting-control">
-                <option value="auto" selected>Auto (Virtual เมื่อ ≥ 300 บรรทัด)</option>
-                <option value="always">Always Virtual (เปิดตลอดเวลา)</option>
-                <option value="never">Normal Mode (ปิด Virtual Scroll)</option>
+                <option value="auto" selected>Auto (Virtual when ≥ 300 lines)</option>
+                <option value="always">Always Virtual</option>
+                <option value="never">Normal Mode (Disable Virtual Scroll)</option>
             </select>
         </div>
 
         <!-- Font Size Slider -->
         <div class="setting-group">
             <div style="display: flex; justify-content: space-between;">
-                <label class="setting-label" for="rangeFontSize">Font Size (ขนาดตัวอักษร)</label>
+                <label class="setting-label" for="rangeFontSize">Font Size</label>
                 <span id="fontSizeVal" style="font-size: 0.8rem; color: var(--ui-accent);">14px</span>
             </div>
             <input type="range" id="rangeFontSize" min="11" max="24" value="14" step="1" style="width: 100%; cursor: pointer;">
@@ -560,7 +560,7 @@
         <div class="switch-row">
             <div>
                 <div class="switch-title">Word Wrap</div>
-                <div class="switch-desc">ตัดขึ้นบรรทัดใหม่อัตโนมัติ</div>
+                <div class="switch-desc">Soft wrap long lines</div>
             </div>
             <label class="toggle-switch">
                 <input type="checkbox" id="chkWordWrap">
@@ -570,12 +570,12 @@
 
         <!-- Sample Files Section -->
         <div class="setting-group" style="margin-top: 8px; border-top: 1px solid var(--ui-border); padding-top: 12px;">
-            <label class="setting-label">โหลดตัวอย่างทดสอบรวดเร็ว</label>
+            <label class="setting-label">Quick Load Demos</label>
             <div class="sample-buttons">
                 <button class="btn-sample" id="btnSampleReact">⚛️ React (TSX)</button>
                 <button class="btn-sample" id="btnSamplePython">🐍 Python ML</button>
                 <button class="btn-sample" id="btnSampleSql">🗄️ Complex SQL</button>
-                <button class="btn-sample" id="btnSampleLarge">⚡ 2,500 บรรทัด</button>
+                <button class="btn-sample" id="btnSampleLarge">⚡ 2,500 Lines</button>
             </div>
         </div>
     </aside>
@@ -584,8 +584,8 @@
     <div class="dropzone-overlay" id="dropzoneOverlay">
         <div class="dropzone-message">
             <div class="dropzone-icon">📂</div>
-            <h2>วางไฟล์ที่นี่เพื่อเปิดดูทันที</h2>
-            <p style="color: var(--ui-text-dim); margin-top: 8px;">รองรับไฟล์ทุกนามสกุล เช่น .js, .ts, .py, .html, .css, .json, .sql, .rs, .go</p>
+            <h2>Drop file here to open instantly</h2>
+            <p style="color: var(--ui-text-dim); margin-top: 8px;">Supports all extensions e.g. .js, .ts, .py, .html, .css, .json, .sql, .rs, .go</p>
         </div>
     </div>
 
@@ -893,7 +893,7 @@ LIMIT 100;`
             // Update Telemetry display
             fileNameDisplay.textContent = `📄 ${currentFile.name}`;
             fileSizeDisplay.textContent = formatBytes(currentFile.size);
-            fileLinesDisplay.textContent = `${lineCount.toLocaleString()} บรรทัด`;
+            fileLinesDisplay.textContent = `${lineCount.toLocaleString()} lines`;
             renderTimeDisplay.textContent = `⚡ ${renderDuration} ms`;
             modeBadge.textContent = isVirtualActive ? '🚀 Virtual Scroll' : '⚡ Normal Mode';
             modeBadge.style.color = isVirtualActive ? '#58a6ff' : '#3fb950';

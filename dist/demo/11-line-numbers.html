@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,37 +56,37 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1 style="margin-top: 12px;">Demo 11: Line Numbers & Line Highlighting</h1>
         <p class="desc">
-            ทดสอบระบบ <strong>เลขบรรทัด (Line Numbers)</strong> และ <strong>แถบสีเน้นเฉพาะบรรทัด (Line Highlighting)</strong><br>
-            ทำงานอัตโนมัติทั้งใน <strong>Normal Mode</strong> และ <strong>Virtual Scroll Mode</strong> โดยที่การ Copy ไม่ติดตัวเลขปนมา
+            Testing <strong>Gutter Line Numbers</strong> and <strong>Targeted Line Highlighting</strong><br>
+            Operating seamlessly across both <strong>Normal Mode</strong> and <strong>Virtual Scroll Mode</strong> with zero copy pollution.
         </p>
 
         <!-- Feature Cards -->
         <div class="feature-grid">
             <div class="feature-card">
                 <div class="feature-title">🔢 Smart Gutter Auto-width</div>
-                <div class="feature-desc">ปรับความกว้างของเลขบรรทัดตามจำนวนหลักอัตโนมัติ (1 ถึง 50,000+ บรรทัด)</div>
+                <div class="feature-desc">Automatically calculates gutter width based on line count digits (1 to 50,000+ lines).</div>
             </div>
             <div class="feature-card">
                 <div class="feature-title">🎨 7 Themes Highlight</div>
-                <div class="feature-desc">แถบสีไฮไลต์เฉพาะบรรทัดเข้ากับธีมปัจจุบัน (ขอบสีทอง/ฟ้า/ม่วง)</div>
+                <div class="feature-desc">Line highlight accent matches the active theme palette with custom borders.</div>
             </div>
             <div class="feature-card">
                 <div class="feature-title">📋 Zero Copy Pollution</div>
-                <div class="feature-desc">ใช้ <code>user-select: none</code> เมื่อลากเมาส์คลุมหรือกด Copy จะได้โค้ดสะอาดล้วนๆ</div>
+                <div class="feature-desc">Utilizes <code>user-select: none</code> on gutter digits; copying extracts pure raw code.</div>
             </div>
             <div class="feature-card">
                 <div class="feature-title">⚡ Virtual Window Sync</div>
-                <div class="feature-desc">ในโหมด Virtual Scroll เลขบรรทัดและแถบสีจะคำนวณตาม Window ที่เลื่อนผ่าน ลื่น 60 FPS</div>
+                <div class="feature-desc">In Virtual Scroll mode, line numbers and highlight accents are rendered dynamically at 60 FPS.</div>
             </div>
         </div>
 
         <!-- Block 1: Normal Mode + Line Numbers Only -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">บล็อก #1: โค้ดสั้น 10 บรรทัด + เลขบรรทัด (Line Numbers)</span>
+                <span class="section-title">Block #1: Short code (10 lines) + Line Numbers</span>
                 <span class="badge badge-normal">data-line-numbers="true"</span>
             </div>
             <pre id="block-1" data-line-numbers="true"><code class="language-javascript">
@@ -106,7 +106,7 @@ console.log("5! =", calculateFactorial(5));
         <!-- Block 2: Normal Mode + Line Numbers + Line Highlighting -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">บล็อก #2: 12 บรรทัด + เน้นเฉพาะบรรทัด (Line 3, 6-8, 11)</span>
+                <span class="section-title">Block #2: 12 lines + Targeted Highlights (Lines 3, 6-8, 11)</span>
                 <div>
                     <span class="badge badge-normal">Normal Mode</span>
                     <span class="badge badge-hl">data-line="3, 6-8, 11"</span>
@@ -131,7 +131,7 @@ def transform_record(raw_dict):
         <!-- Block 3: Virtual Mode + Line Numbers + Highlights (400 lines) -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">บล็อก #3: โค้ด 400 บรรทัด + Virtual Buffer + เน้นบรรทัด (Line 5-8, 50, 100-105)</span>
+                <span class="section-title">Block #3: 400 lines + Virtual Buffer + Highlights (Lines 5-8, 50, 100-105)</span>
                 <div>
                     <span class="badge badge-virtual">Virtual Buffer (400 Lines)</span>
                     <span class="badge badge-hl">data-line="5-8, 50, 100-105"</span>
@@ -143,7 +143,7 @@ def transform_record(raw_dict):
         <!-- Block 4: Virtual Mode Extreme (5,000 lines SQL Dump) -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">บล็อก #4: โค้ด 5,000 บรรทัด (Virtual Scroll + 4 Digits Gutter + Line 15-20)</span>
+                <span class="section-title">Block #4: 5,000 lines (Virtual Scroll + 4-Digit Gutter + Lines 15-20)</span>
                 <div>
                     <span class="badge badge-virtual">5,000 Lines SQL</span>
                     <span class="badge badge-hl">data-line="15-20, 500-505"</span>
@@ -155,17 +155,17 @@ def transform_record(raw_dict):
         <!-- Paste Verification -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">📋 ทดสอบ Paste เพื่อตรวจสอบว่าไม่มีเลขบรรทัดปนมา</span>
+                <span class="section-title">📋 Test Paste to verify zero line numbers in copied text</span>
             </div>
             <p style="font-size: 0.85rem; color: #8b949e; margin-bottom: 6px;">
-                ลองกดปุ่ม <strong>Copy</strong> บนบล็อกใดก็ได้ หรือใช้เมาส์ลากคลุมโค้ดแล้วกด Ctrl+C / Cmd+C แล้วนำมาวาง (Ctrl+V / Cmd+V) ในกล่องด้านล่างนี้:
+                Click <strong>Copy</strong> on any block above, or highlight with mouse and Ctrl+C / Cmd+C, then paste (Ctrl+V / Cmd+V) below:
             </p>
-            <div id="paste-test" contenteditable="true" placeholder="คลิกที่นี่แล้วกด Paste (Ctrl+V / Cmd+V)..."></div>
+            <div id="paste-test" contenteditable="true" placeholder="Click here and press Paste (Ctrl+V / Cmd+V)..."></div>
         </div>
 
         <!-- Automated Test Results -->
         <div id="results">
-            <h3 style="margin-bottom: 12px; font-size: 1rem;">กำลังรันการตรวจสอบอัตโนมัติ (Automated Assertions)...</h3>
+            <h3 style="margin-bottom: 12px; font-size: 1rem;">Running Automated Assertions...</h3>
         </div>
     </div>
 
@@ -222,18 +222,18 @@ def transform_record(raw_dict):
             const b1LineNums = document.querySelectorAll('#block-1 .hideko-line-number');
             const hasB1Nums = b1LineNums.length >= 8;
             tests.push({
-                name: 'บล็อก #1 (Normal Mode): เรนเดอร์ตัวเลขบรรทัด .hideko-line-number ถูกต้อง',
+                name: 'Block #1 (Normal Mode): Line numbers rendered in gutter (.hideko-line-number)',
                 passed: hasB1Nums,
-                detail: `พบเลขบรรทัดจำนวน ${b1LineNums.length} แถว (ค่าแรก: "${b1LineNums[0]?.textContent}", ค่าสุดท้าย: "${b1LineNums[b1LineNums.length - 1]?.textContent}")`
+                detail: `Found ${b1LineNums.length} line number elements (First: "${b1LineNums[0]?.textContent}", Last: "${b1LineNums[b1LineNums.length - 1]?.textContent}")`
             });
 
             // Test 2: Block 2 has line highlighting on specific lines (3, 6-8, 11)
             const b2HlLines = document.querySelectorAll('#block-2 .hideko-line-highlighted');
             const hasB2Hl = b2HlLines.length >= 4;
             tests.push({
-                name: 'บล็อก #2: แถบสีเน้นเฉพาะบรรทัด .hideko-line-highlighted ติดถูกต้องตาม data-line="3, 6-8, 11"',
+                name: 'Block #2: Targeted line highlight .hideko-line-highlighted per data-line="3, 6-8, 11"',
                 passed: hasB2Hl,
-                detail: `พบบรรทัดที่ถูกไฮไลต์จำนวน ${b2HlLines.length} บรรทัด`
+                detail: `Found ${b2HlLines.length} highlighted line rows`
             });
 
             // Test 3: Block 3 (Virtual 400 lines) has line numbers rendered in viewport
@@ -241,9 +241,9 @@ def transform_record(raw_dict):
             const hasB3Nums = b3LineNums.length > 10;
             const b3FirstNum = parseInt(b3LineNums[0]?.textContent || '0', 10);
             tests.push({
-                name: 'บล็อก #3 (Virtual 400 บรรทัด): เลขบรรทัดใน Viewport รันต่อเนื่องและไม่ทำให้ Scroll ค้าง',
+                name: 'Block #3 (Virtual 400 lines): Viewport line numbers run continuously without lag',
                 passed: hasB3Nums && b3FirstNum === 1,
-                detail: `Viewport เรนเดอร์ ${b3LineNums.length} บรรทัด โดยเริ่มต้นที่บรรทัด ${b3FirstNum}`
+                detail: `Viewport renders ${b3LineNums.length} lines starting at index ${b3FirstNum}`
             });
 
             // Test 4: Block 4 (Virtual 5,000 lines) Gutter Width auto-adjusts for 4+ digits
@@ -251,9 +251,9 @@ def transform_record(raw_dict):
             const b4LineNums = document.querySelectorAll('#block-4 .hideko-line-number');
             const hasB4Nums = b4LineNums.length > 10;
             tests.push({
-                name: 'บล็อก #4 (Virtual 5,000 บรรทัด): เรนเดอร์เลขบรรทัดใน Viewport สำเร็จ และคำนวณความกว้าง Gutter อัตโนมัติ',
+                name: 'Block #4 (Virtual 5,000 lines): Viewport line numbers & automatic gutter width calculation',
                 passed: hasB4Nums,
-                detail: `Viewport เรนเดอร์ ${b4LineNums.length} บรรทัดพร้อมเลขบรรทัดเริ่มต้นที่ ${b4LineNums[0]?.textContent}`
+                detail: `Viewport renders ${b4LineNums.length} lines with first line number ${b4LineNums[0]?.textContent}`
             });
 
             // Test 5: Verify Copy Button on Block 4 extracts full 5,000 lines clean
@@ -261,9 +261,9 @@ def transform_record(raw_dict):
             const totalLinesInBuffer = b4Buffer ? b4Buffer.getLineCount() : 0;
             const hasCleanCopy = totalLinesInBuffer === 5000;
             tests.push({
-                name: 'ปุ่ม Copy & VirtualBuffer: ดึงโค้ดสะอาดครบ 5,000 บรรทัดโดยไม่มีเลขบรรทัดปนในข้อความ',
+                name: 'Copy Button & VirtualBuffer: Extracts clean code (5,000 lines) without gutter line numbers',
                 passed: hasCleanCopy,
-                detail: `Buffer เก็บโค้ดดิบครบ ${totalLinesInBuffer} บรรทัด`
+                detail: `Buffer contains full raw code with ${totalLinesInBuffer} lines`
             });
 
             // Render Test Results
@@ -271,8 +271,8 @@ def transform_record(raw_dict):
             const resEl = document.getElementById('results');
             resEl.innerHTML = `
                 <h3 style="margin-bottom: 14px; font-size: 1.05rem;">
-                    ผลการทดสอบระบบ Line Numbers & Line Highlighting: 
-                    <span class="${allPassed ? 'pass' : 'fail'}">${allPassed ? '✅ ผ่านการทดสอบทั้งหมด (100% PASS)' : '❌ มีบางหัวข้อไม่ผ่าน'}</span>
+                    Line Numbers & Highlighting Test Results: 
+                    <span class="${allPassed ? 'pass' : 'fail'}">${allPassed ? '✅ All tests passed (100% PASS)' : '❌ Some tests failed'}</span>
                 </h3>
                 <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
                     ${tests.map(t => `

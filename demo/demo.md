@@ -1,182 +1,170 @@
-# แผนการสร้างหน้า Demo ทดสอบการทำงานของ Hideko (Built `dist/`)
+# Hideko Code Block — Comprehensive Demo Suite & Test Specifications
 
-โฟลเดอร์ `demo/` จะประกอบด้วยหน้า HTML หลายไฟล์ แต่ละไฟล์ทดสอบการใช้งาน `dist/` ในรูปแบบที่แตกต่างกัน เพื่อยืนยันว่า Build Artifacts ทำงานได้ถูกต้องครบถ้วนก่อนนำไปเผยแพร่สาธารณะ
+The `demo/` directory contains standalone HTML pages testing every aspect of the built artifacts in `dist/`. Each demo exercises `dist/` in a distinct environment and usage scenario to ensure that all distribution bundles function flawlessly before public release.
 
 ---
 
-## 📂 โครงสร้างโฟลเดอร์ Demo
+## 📂 Demo Folder Structure
 
 ```
 demo/
-├── 00-file-viewer.html         # Interactive File Viewer เต็มจอ (w-full, h-full, ปุ่มลอย, ปรับค่าได้อิสระ)
-├── 01-basic-iife.html          # ทดสอบโหลดแบบ <script> ธรรมดา (IIFE)
-├── 02-esm-module.html          # ทดสอบโหลดแบบ ES Module (<script type="module">)
-├── 03-all-themes.html          # ทดสอบแสดงผลทั้ง 7 ธีมเปรียบเทียบกัน
-├── 04-multi-languages.html     # ทดสอบโหลดหลายภาษาพร้อมกัน (JS, Python, SQL, CSS, HTML, JSON)
-├── 05-auto-scanner.html        # ทดสอบ highlightAll() สแกน <pre><code> อัตโนมัติ
-├── 06-manual-highlight.html    # ทดสอบ highlight() API เรียกทีละ element ด้วยมือ
-├── 07-dynamic-inject.html      # ทดสอบฉีดโค้ดแบบ Dynamic (เพิ่มบล็อกโค้ดทีหลังแล้วสั่งไฮไลต์)
-├── 08-copy-button.html         # ทดสอบปุ่ม Copy Code ว่าทำงานถูกต้อง
-├── 09-lazy-scroll.html         # ทดสอบ Lazy Load ตาม Viewport
-├── 10-virtual-scroll.html      # ทดสอบ Virtual Buffer & Adaptive Scrolling (50,000+ บรรทัด)
-├── 11-line-numbers.html        # ทดสอบ Line Numbers & Line Highlighting
-└── index.html                  # หน้ารวมลิงก์ไปแต่ละ Demo
+├── 00-file-viewer.html         # Interactive full-viewport code viewer (w-full, h-full, FAB, live settings)
+├── 01-basic-iife.html          # Browser UMD/IIFE bundle loaded via classic <script> tag
+├── 02-esm-module.html          # ES Module bundle loaded via <script type="module">
+├── 03-all-themes.html          # Side-by-side comparison of all 7 built-in themes
+├── 04-multi-languages.html     # Concurrent multi-language highlighting (JS, Python, SQL, CSS, HTML, JSON)
+├── 05-auto-scanner.html        # DOM auto-scanner highlightAll() covering all selector variations
+├── 06-manual-highlight.html    # Low-level highlight() API called programmatically on raw code strings
+├── 07-dynamic-inject.html      # Dynamic code block injection (SPA / AJAX / streaming scenarios)
+├── 08-copy-button.html         # One-click copy button functionality & clipboard verification
+├── 09-lazy-scroll.html         # Viewport lazy-loading via IntersectionObserver
+├── 10-virtual-scroll.html      # VirtualBuffer & adaptive scrolling engine (50,000+ lines stress test)
+├── 11-line-numbers.html        # Line numbers gutter & line range highlighting
+├── demo.md                     # Demo suite specifications & verification guide (this file)
+└── index.html                  # Demo Hub landing page & navigation index
 ```
 
 ---
 
-## 📋 รายละเอียดแต่ละ Demo
+## 📋 Demo Details & Verification Objectives
 
 ### Demo 00: Interactive File Viewer (`00-file-viewer.html`)
-**เป้าหมาย:** แอปพลิเคชันเปิดไฟล์โค้ดจริงจากเครื่องคอมพิวเตอร์เพื่อแสดงผลแบบเต็มจอ (Full Viewport `w-full`, `h-full`) และปรับแต่งตั้งค่า Hideko ได้แบบ Real-time
-- **Layout:** รองรับ `w-full` และ `h-full` แสดงโค้ดแบบเต็มหน้าต่าง ไร้ขอบล้น พร้อม Scrollbar สวยงาม
-- **ปุ่มเปิดไฟล์แบบลอย (Floating FAB):** ปุ่มเปิดไฟล์ gradient ลอยเด่นตรงมุมขวาล่าง กดเพื่อเปิด File Picker จากเครื่อง หรือกดปุ่มคีย์ลัด `Ctrl+O` / `Cmd+O`
-- **Drag & Drop:** สามารถลากไฟล์โค้ดจากคอมพิวเตอร์มาวางบนหน้าต่างเบราว์เซอร์ได้ทันที มี Dropzone Overlay แสดงผล
-- **ระบบตรวจจับภาษาอัตโนมัติ:** ตรวจจากนามสกุลไฟล์ เช่น `.py` → Python, `.ts`/`.tsx` → TypeScript, `.sql` → SQL
-- **Floating Settings Panel (แถบตั้งค่าแบบลอย):**
-  - สลับ 7 ธีมได้ทันที (`dark`, `light`, `dracula`, `one-dark`, `nord`, `monokai`, `github-dark`)
-  - เปลี่ยนภาษาที่ต้องการไฮไลต์ได้เอง
-  - สวิตช์เปิด/ปิด เลขบรรทัด (Line Numbers)
-  - ช่องระบุช่วงบรรทัดที่ต้องการไฮไลต์แถบสี (Highlight Lines เช่น `3, 7-10`)
-  - กำหนดเลขบรรทัดเริ่มต้น (Start Line Offset)
-  - ตัวเลือกสลับ Virtual Scroll (Auto / Always Virtual / Normal Mode)
-  - ปรับขนาดตัวอักษร (Font Size Slider 11px - 24px)
-  - เปิด/ปิด ตัดคำขึ้นบรรทัดใหม่ (Word Wrap)
-  - ปุ่มโหลดไฟล์ตัวอย่างทันที: React Component, Python ML Pipeline, Complex SQL, หรือไฟล์ทดสอบ 2,500 บรรทัด
-- **Telemetry Bar:** แสดงชื่อไฟล์, ขนาดไฟล์, จำนวนบรรทัด, ความเร็วในการ Render (ms), และโหมดที่ใช้งาน
+**Goal:** Interactive desktop-grade code viewer application supporting full viewport (`w-full`, `h-full`) and real-time Hideko configuration.
+- **Layout:** Full viewport height and width (`100vw`, `100vh`), custom sleek scrollbars, zero layout overflows.
+- **Floating Action Button (FAB):** Prominent gradient button in bottom-right corner triggering native file picker or via keyboard shortcut `Ctrl+O` / `Cmd+O`.
+- **Drag & Drop:** Instant drag-and-drop file ingestion anywhere on the browser window with an animated dropzone overlay.
+- **Auto Language Detection:** Detects languages automatically from file extensions (e.g., `.py` → Python, `.ts`/`.tsx` → TypeScript, `.sql` → SQL).
+- **Floating Settings Panel:**
+  - Instant live switching between all 7 themes (`dark`, `light`, `dracula`, `one-dark`, `nord`, `monokai`, `github-dark`).
+  - Manual language override select.
+  - Line numbers toggle switch.
+  - Highlight line ranges input (e.g. `3, 7-10, 15`).
+  - Start line offset number input.
+  - Virtual Scroll Engine mode (Auto / Always Virtual / Normal Mode).
+  - Font size slider (11px – 24px) with instant rem recalculation.
+  - Word wrap toggle switch.
+  - One-click sample file loaders: React TSX Component, Python ML Pipeline, Complex SQL query, or 2,500-line stress test.
+- **Telemetry Bar:** Displays active filename, formatted file size, line count, render duration in milliseconds, and active virtualization mode.
 
 ---
 
 ### Demo 01: Basic IIFE / UMD (`01-basic-iife.html`)
-**เป้าหมาย:** ทดสอบว่า `dist/hideko-code-block.umd.js` (Browser UMD/IIFE) ทำงานได้จริงเมื่อโหลดแบบแท็ก `<script>` ธรรมดา
-- โหลด `dist/hideko-code-block.umd.js` + `dist/style.min.css`
-- โหลดภาษา `dist/languages/javascript.js`
-- ใช้ `HidekoCodeBlock.highlightAll()` สแกน `<pre><code>` ในหน้า
-- **ตรวจ:** token classes (`.mtk5`, `.mtk7`, `.mtk11`) ปรากฏใน DOM ถูกต้อง, สีตรงตามธีม
+**Goal:** Verify that `dist/hideko-code-block.umd.js` works in browser global scope when included via standard `<script>` tag.
+- Loads `dist/hideko-code-block.umd.js` + `dist/style.min.css`.
+- Loads language grammar `dist/languages/javascript.js`.
+- Calls `HidekoCodeBlock.highlightAll()` on DOM elements.
+- **Assertion:** Token classes (`.mtk5`, `.mtk7`, `.mtk11`) exist in DOM with correct theme styling.
 
 ---
 
 ### Demo 02: ESM Module (`02-esm-module.html`)
-**เป้าหมาย:** ทดสอบว่า `dist/hideko-code-block.js` (ESM) ทำงานได้จริงเมื่อโหลดแบบ `<script type="module">`
-- ใช้ `import { highlight, highlightAll } from '../dist/hideko-code-block.js'`
-- โหลดภาษาแบบ dynamic import: `await import('../dist/languages/python.js')`
-- **ตรวจ:** เปรียบเทียบว่า output ESM กับ output UMD (Demo 01) ได้ผลเหมือนกัน
+**Goal:** Verify that `dist/hideko-code-block.js` (ES Module) works correctly with `<script type="module">`.
+- Imports `highlight` and `highlightAll` from `../dist/hideko-code-block.js`.
+- Dynamically imports language module: `await import('../dist/languages/python.js')`.
+- **Assertion:** ESM output matches UMD output pixel-for-pixel and token-for-token.
 
 ---
 
 ### Demo 03: All Themes Showcase (`03-all-themes.html`)
-**เป้าหมาย:** แสดงโค้ดเดียวกันในทุกธีม 7 ธีมเปรียบเทียบกัน บนหน้าเดียว
-- ธีมที่ทดสอบ: `dark`, `light`, `dracula`, `one-dark`, `nord`, `monokai`, `github-dark`
-- ใช้โค้ด JavaScript ตัวอย่างเดียวกัน วางซ้อนกัน 7 บล็อก แต่ละบล็อกตั้ง `data-theme` ต่างกัน
-- **ตรวจ:** CSS Variables (`--hideko-bg`, `--hideko-fg`, `--mtk5` ฯลฯ) แต่ละธีมมีสีแตกต่างกัน, พื้นหลังและตัวอักษรเปลี่ยนตามธีมถูกต้อง
+**Goal:** Display identical code blocks across all 7 built-in themes for visual contrast and style verification.
+- Tested Themes: `dark`, `light`, `dracula`, `one-dark`, `nord`, `monokai`, `github-dark`.
+- Renders 7 stacked code blocks with identical JavaScript code, each isolated with its own `data-theme`.
+- **Assertion:** Theme CSS variables (`--hideko-bg`, `--hideko-fg`, `--mtk*`) apply properly without style leakage.
 
 ---
 
 ### Demo 04: Multi Languages (`04-multi-languages.html`)
-**เป้าหมาย:** ทดสอบการโหลดและไฮไลต์หลายภาษาพร้อมกัน
-- ภาษาที่ทดสอบ: JavaScript, Python, SQL, CSS, HTML, JSON, Rust, Go
-- ตรวจ: แต่ละบล็อกภาษาแสดง Token สีที่ถูกต้องตามไวยากรณ์ภาษานั้น ๆ
-  - Python: keyword `def`, `return` เป็นสีน้ำเงิน (`.mtk5`), string เป็นสีส้ม (`.mtk7`)
-  - SQL: keyword `SELECT`, `FROM` เป็นสีน้ำเงิน, ตัวเลขเป็นสีเขียว (`.mtk6`)
-  - CSS: property เป็นสีหนึ่ง, value เป็นอีกสีหนึ่ง
-- **ตรวจ:** ทุกภาษาแยกสีได้ถูกต้อง ไม่มีภาษาใดแสดงเป็น plain text (ไม่มีสี)
+**Goal:** Verify simultaneous loading and highlighting of diverse programming and markup languages.
+- Tested Languages: JavaScript, Python, SQL, CSS, HTML, JSON, Rust, Go.
+- **Assertion:** Each language renders corresponding semantic token classes according to its grammar specification (keywords, strings, numbers, properties).
 
 ---
 
 ### Demo 05: Auto Scanner (`05-auto-scanner.html`)
-**เป้าหมาย:** ทดสอบ `highlightAll()` สแกน DOM อัตโนมัติรองรับทุกรูปแบบที่ระบุไว้ใน Scanner
-- รูปแบบที่ต้องทดสอบ:
-  1. `<pre><code class="language-javascript">...</code></pre>` (รูปแบบมาตรฐาน)
-  2. `<pre class="language-python">...</pre>` (class บน pre โดยตรง)
-  3. `<div data-lang="sql">...</div>` (ใช้ `data-lang` attribute)
-  4. `<div h-lang="css">...</div>` (ใช้ `h-lang` attribute แบบ Hideko เอง)
-  5. `<pre><code class="lang-go">...</code></pre>` (class ใช้ prefix `lang-` แทน `language-`)
-  6. `<div class="hideko" data-lang="json">...</div>` (ใช้ class `.hideko`)
-- **ตรวจ:** ทุก element ที่กล่าวมาถูกสแกนและแปลงเป็นโค้ดมีสีทั้งหมด ไม่ตกหล่น
+**Goal:** Verify that `highlightAll()` discovers and processes all supported DOM markup variations.
+- Supported selector variants tested:
+  1. `<pre><code class="language-javascript">...</code></pre>` (Standard markdown HTML)
+  2. `<pre class="language-python">...</pre>` (Language class directly on `<pre>`)
+  3. `<div data-lang="sql">...</div>` (Explicit `data-lang` attribute)
+  4. `<div h-lang="css">...</div>` (Hideko custom `h-lang` attribute)
+  5. `<pre><code class="lang-go">...</code></pre>` (Legacy `lang-` prefix)
+  6. `<div class="hideko" data-lang="json">...</div>` (`.hideko` marker class)
+- **Assertion:** 100% of declared elements are highlighted without omitting any selectors.
 
 ---
 
 ### Demo 06: Manual Highlight API (`06-manual-highlight.html`)
-**เป้าหมาย:** ทดสอบเรียก `highlight()` API ตรงๆ เพื่อแปลงสตริงโค้ดเป็น HTML แล้วยัดเข้า DOM ด้วยมือ
-- เรียก `HidekoHighlight.highlight(codeString, langDef, conf, ['root'])`
-- นำ `result.html` ไปใส่ใน `<pre>` ที่เตรียมไว้
-- **ตรวจ:** สามารถควบคุม output ด้วย API ระดับต่ำได้ถูกต้อง ไม่ต้องพึ่ง Scanner
+**Goal:** Verify low-level programmatic highlighting API without DOM mutation.
+- Calls `HidekoHighlight.highlight(codeString, langDef, conf, ['root'])`.
+- Manually injects `result.html` into a target element.
+- **Assertion:** Complete manual control over highlighted string output.
 
 ---
 
 ### Demo 07: Dynamic Inject (`07-dynamic-inject.html`)
-**เป้าหมาย:** ทดสอบ scenario จริงที่โค้ดถูกเพิ่มเข้ามาใน DOM ทีหลัง (เช่น Single Page App, AJAX, Chat App)
-- กดปุ่ม → JavaScript สร้าง `<pre><code>...</code></pre>` ใหม่ → เรียก `HidekoHighlight.highlightElement(newElement)` บนตัวใหม่
-- กดปุ่มซ้ำหลายครั้ง → ตรวจว่าไม่ประมวลผลซ้ำ (เพราะมี `data-hideko-processed="true"`)
-- **ตรวจ:** โค้ดที่ถูกฉีดเข้ามาทีหลังก็ไฮไลต์ได้ถูกต้อง, ไม่มี double-processing
+**Goal:** Verify highlighting in dynamic applications (SPA, AJAX, WebSocket, LLM streaming output).
+- Button click generates new `<pre><code>` elements and calls `HidekoHighlight.highlightElement(el)`.
+- Repeated button clicks verify idempotency (`data-hideko-processed="true"` prevents double-processing).
+- **Assertion:** Dynamically appended elements highlight immediately without duplication bugs.
 
 ---
 
 ### Demo 08: Copy Button (`08-copy-button.html`)
-**เป้าหมาย:** ทดสอบปุ่ม Copy ที่แทรกเข้ามาอัตโนมัติ
-- ตรวจว่าทุก `<pre>` block มีปุ่ม Copy ปรากฏ (ตัวจัดสร้างจาก `utils.js → createCopyButton()`)
-- กดปุ่ม Copy → ข้อความโค้ดต้นฉบับ (ไม่มี HTML tags) ถูกคัดลอกเข้า Clipboard สำเร็จ
-- หลังกดปุ่มแสดงข้อความ feedback (เช่น "Copied!" หรือเปลี่ยนไอคอน)
-- **ตรวจ:** วาง (Paste) ที่อื่นได้โค้ดต้นฉบับที่ถูกต้องครบถ้วน
+**Goal:** Verify automated copy button injection and clipboard interaction.
+- Verifies copy button DOM presence in all generated pre blocks.
+- Clicking copy button writes raw text (without line numbers or HTML tags) to `navigator.clipboard`.
+- Verifies transient visual feedback ("Copied!" status badge).
+- **Assertion:** Pasted text matches raw code with 100% fidelity.
 
 ---
 
 ### Demo 09: Viewport Lazy Loading (`09-lazy-scroll.html`)
-**เป้าหมาย:** ทดสอบการทำ Viewport Lazy Loading ผ่าน IntersectionObserver ด้วยตัวเลือก `{ lazy: true }`
-- บล็อกโค้ดที่อยู่บนสุด (ใน viewport) ถูกไฮไลต์ทันที
-- บล็อกโค้ดที่อยู่ด้านล่าง (นอก viewport) ยังไม่ถูกไฮไลต์ และยังไม่ดึงไฟล์ภาษา
-- เมื่อผู้ใช้ Scroll ลงมาใกล้ถึง บล็อกโค้ดจะถูกไฮไลต์และโหลดภาษาแบบ On-Demand อัตโนมัติ
-- มี Telemetry HUD แสดงสถานะแบบเรียลไทม์
+**Goal:** Verify performance optimization using `IntersectionObserver` with `{ lazy: true }`.
+- Blocks in initial viewport highlight immediately.
+- Offscreen blocks defer highlighting and language bundle network fetches until scrolled near viewport.
+- Real-time telemetry HUD displays lazy observation lifecycle states.
 
 ---
 
 ### Demo 10: Virtual Buffer & Adaptive Scrolling (`10-virtual-scroll.html`)
-**เป้าหมาย:** ทดสอบระบบ Virtual Buffer และ Adaptive Smart Threshold สำหรับโค้ดตั้งแต่ 10 บรรทัด จนถึง 20,000–50,000 บรรทัด
-- บล็อก #1 (10 บรรทัด): ทำงานใน Normal Mode อัตโนมัติ (Auto Height พอดีตัว ไม่มี Scrollbar)
-- บล็อก #2 (400 บรรทัด): สลับเข้าสู่ Virtual Mode อัตโนมัติ คุมความสูง 350px
-- บล็อก #3 (1,000 บรรทัด): สลับเข้าสู่ Virtual Mode คุมความสูง 400px
-- บล็อก #4 (20,000 บรรทัด): สลับเข้าสู่ Virtual Mode คุมความสูง 450px เรนเดอร์ใน DOM เพียง ~40 บรรทัด (ลด DOM Nodes ได้ 99.8%)
-- มี Telemetry แสดงจำนวนบรรทัดรวม, จำนวน DOM Nodes ในจอ, และ % Memory ที่ประหยัดได้
-- มีกล่องทดสอบ Paste ยืนยันว่าปุ่ม Copy ดึงโค้ดครบถ้วน 20,000 บรรทัดจาก VirtualBuffer โดยตรง
+**Goal:** Stress-test the VirtualBuffer and Adaptive Smart Threshold engine across code sizes from 10 lines to 50,000+ lines.
+- Block #1 (10 lines): Normal Mode (auto-height, no virtual scrollbar overhead).
+- Block #2 (400 lines): Automatic transition to Virtual Mode with 350px viewport.
+- Block #3 (1,000 lines): Virtual Mode with 400px viewport.
+- Block #4 (20,000 lines): Virtual Mode with 450px viewport rendering only ~40 DOM nodes (99.8% DOM reduction).
+- Real-time Telemetry HUD displays line count, active DOM nodes, and memory savings.
+- Paste test arena confirms one-click copy extracts all 20,000 lines intact directly from the virtual buffer.
 
-#### 📊 สถิติเปรียบเทียบผลทดสอบจริง (21,410 บรรทัด):
-| รายการวัดผล | ⚡ มี VirtualBuffer | ❌ ไม่มี VirtualBuffer (Full Render) | ความแตกต่าง |
+#### 📊 Performance Benchmark Comparison (21,410 lines):
+| Metric | ⚡ With VirtualBuffer | ❌ Without VirtualBuffer (Full DOM) | Difference |
 |---|:---:|:---:|:---:|
-| **เวลา JS Tokenizer** | **2.7 ms** (0.0027 วิ) | **244.7 ms** (0.25 วิ) | **เร็วกว่า 90 เท่า** |
-| **ขนาดสตริง HTML** | **101 KB** | **21.59 MB** | **เล็กลง 218 เท่า** |
-| **จำนวน DOM Spans** | **~1,600 ชิ้น** | **~760,000 ชิ้น** | **ลดลง 99.8%** |
-| **เวลา Browser Render** | **~15 - 30 ms** (พริบตาเดียว) | **~3,000 - 5,000 ms** (3-5 วิ) | **เร็วกว่า 100+ เท่า** |
-| **อาการหน้าจอ (UI)** | **ลื่นไหลทันที 0 วิ (60 FPS)** | **หน้าเว็บค้างสนิท 3-5 วิ (UI Freeze)** | **ไม่ค้าง 100%** |
-| **RAM ของแท็บเบราว์เซอร์** | **~2 - 3 MB** | **~250 - 400 MB** | **ประหยัดแรมมหาศาล** |
+| **JS Tokenizer Time** | **2.7 ms** (0.0027 s) | **244.7 ms** (0.25 s) | **90x faster** |
+| **HTML String Size** | **101 KB** | **21.59 MB** | **218x smaller** |
+| **DOM Span Count** | **~1,600 nodes** | **~760,000 nodes** | **99.8% reduction** |
+| **Browser Render Time** | **~15 - 30 ms** | **~3,000 - 5,000 ms** (3-5 s) | **100x+ faster** |
+| **UI Responsiveness** | **Silky Smooth (60 FPS)** | **UI Frozen for 3-5 s** | **Zero UI freezing** |
+| **Browser Tab Memory** | **~2 - 3 MB** | **~250 - 400 MB** | **Huge RAM savings** |
 
 ---
 
 ### Demo 11: Line Numbers & Line Highlighting (`11-line-numbers.html`)
-**เป้าหมาย:** ทดสอบระบบเลขบรรทัด (Line Numbers) และแถบสีเน้นเฉพาะบรรทัด (Line Highlighting) ทั้งใน Normal Mode และ Virtual Scroll Mode
-- บล็อก #1: 10 บรรทัด แสดงเลข 1 ถึง 10 ทางด้านซ้ายอย่างเป็นระเบียบ
-- บล็อก #2: 12 บรรทัด แสดงเลขบรรทัดพร้อมแถบสีเน้นเฉพาะแถว `data-line="3, 6-8, 11"` พร้อมขอบเส้นสีทอง
-- บล็อก #3: Virtual Scroll 400 บรรทัด แสดงเลขบรรทัดและไฮไลต์บรรทัด 5-8, 50, 100-105 แบบ Realtime ขณะเลื่อน Scroll
-- บล็อก #4: Virtual Scroll 5,000 บรรทัด Gutter Width ขยายอัตโนมัติรองรับตัวเลข 4 หลัก โดยไม่ทำให้ข้อความโค้ดตกบรรทัด
-- กล่องทดสอบ Paste: ยืนยันว่าการลากเมาส์คลุมก๊อปปี้ หรือการกดปุ่ม Copy ดึงเฉพาะโค้ดดิบสะอาด 100% ไม่มีเลขบรรทัดปนมาเลย
+**Goal:** Test line numbers gutter and line highlighting in both Normal and Virtual Scroll modes.
+- Block #1: 10 lines with neat line numbers (1–10).
+- Block #2: 12 lines with highlighted ranges `data-line="3, 6-8, 11"` featuring golden accent borders.
+- Block #3: 400-line Virtual Scroll with live line numbers and highlighting ranges (5-8, 50, 100-105) synchronized during scrolling.
+- Block #4: 5,000-line Virtual Scroll with automatic gutter width expansion for 4+ digits without wrapping code lines.
+- Paste test box confirms copying extracts clean raw source code without copying line numbers.
 
 ---
 
-### หน้ารวม: `index.html`
-- หน้า Landing Page สวยงาม เป็น Hub รวมลิงก์ไปแต่ละ Demo
-- แสดงรายชื่อ Demo พร้อมคำอธิบายสั้น ๆ
-- แสดงข้อมูลเวอร์ชัน และขนาดไฟล์ `dist/` โดยรวม
+### Demo Hub: `index.html`
+- Modern responsive landing page showcasing links to all 12 demo scenarios.
+- Live feature highlights, badges, and quick links.
+- Version telemetry and distribution bundle footprint summary.
 
 ---
 
-## ⚙️ หลักการทั่วไป
-1. ทุกไฟล์ Demo จะโหลดไฟล์จากโฟลเดอร์ `../dist/` (ไฟล์ที่ build แล้วเท่านั้น ไม่ใช้ `src/`)
-2. ทุกหน้ามี Panel แสดงผลการทดสอบ (✅ / ❌) ตรวจสอบอัตโนมัติผ่าน JavaScript assertion ง่ายๆ ท้ายหน้า
-3. ทุกหน้าใช้ CSS พื้นฐานจัดรูปแบบให้ดูง่ายและสวยงาม (Dark background, ระยะห่างเหมาะสม)
-
----
-
-## 🔄 ลำดับการดำเนินงาน
-1. สร้างโฟลเดอร์ `demo/`
-2. สร้าง `index.html` (หน้ารวมลิงก์)
-3. สร้าง Demo 01 → 08 ตามลำดับ
-4. ทดสอบเปิดแต่ละหน้าบน Browser จริง เพื่อตรวจผลลัพธ์
+## ⚙️ General Principles
+1. All demo files load built artifacts from `../dist/` (`dist/hideko-code-block.umd.js`, `dist/hideko-code-block.js`, `dist/style.min.css`).
+2. Every demo page includes an automated assertion panel (✅ / ❌) providing instantaneous pass/fail telemetry.
+3. Clean modern UI aesthetics with dark mode default, subtle glowing accents, and responsive layout.

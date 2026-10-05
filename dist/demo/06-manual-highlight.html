@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,22 +32,22 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1>Demo 06: Manual Highlight API</h1>
-        <p class="desc">ทดสอบเรียก <code>highlight()</code> API ตรง ๆ เพื่อแปลงสตริงโค้ดเป็น HTML แล้วยัดเข้า DOM ด้วยมือ — ไม่พึ่ง Scanner</p>
+        <p class="desc">Testing direct invocation of low-level <code>highlight()</code> API to convert code strings into HTML and inject manually into the DOM.</p>
 
         <div class="section">
-            <h2>ผลลัพธ์จาก highlight() API</h2>
+            <h2>Rendered Result from highlight() API</h2>
             <label>Rendered Output:</label>
             <pre class="hideko-pre-block hideko-theme-block" data-theme="one-dark" id="output-block"><code id="output-code"></code></pre>
         </div>
 
         <div class="section">
-            <h2>Raw HTML Output (ดูโค้ดที่สร้างจาก API)</h2>
+            <h2>Raw HTML Output (Inspect generated markup)</h2>
             <div id="raw-html-output"></div>
         </div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br></div>
     </div>
 
     <script src="../hideko-code-block.umd.js"></script>

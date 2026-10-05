@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hideko Code Block Demo Hub</title>
+    <title>Hideko Code Block — Demo Hub</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -66,12 +66,12 @@
 <body>
     <div class="container">
         <h1>⚡ Hideko Code Block — Demo Hub</h1>
-        <p class="subtitle">ทดสอบการทำงานของไฟล์ที่ Build แล้ว (<code>dist/</code>) ในรูปแบบต่าง ๆ บน Browser จริง</p>
+        <p class="subtitle">Interactive test harness evaluating compiled distribution builds (<code>dist/</code>) across real browser environments.</p>
 
         <div class="info-bar">
             <span class="info-tag">📦 Core: 14.08 KB</span>
             <span class="info-tag">🎨 CSS: 4.71 KB</span>
-            <span class="info-tag">🌐 33 Languages</span>
+            <span class="info-tag">🌐 33+ Languages</span>
             <span class="info-tag">🎭 7 Themes</span>
         </div>
 
@@ -80,7 +80,7 @@
                 <div class="demo-num" style="background: #2ea043; color: #fff;">00</div>
                 <div class="demo-info">
                     <div class="demo-title" style="color: #3fb950;">Interactive File Viewer (w-full, h-full) ⭐</div>
-                    <div class="demo-desc">เปิดไฟล์จากเครื่องเข้ามาแสดงผลเต็มจอ, ปุ่มลอย (Floating FAB), ปรับ Theme, ภาษา, Line Numbers, Virtual Scroll ได้ทันที</div>
+                    <div class="demo-desc">Open local files or drag & drop fullscreen, floating FAB controls, live theme switching, language selector, line numbers, and virtual scrolling.</div>
                 </div>
                 <span class="demo-badge" style="background: #23863633; color: #3fb950; border-color: #2ea04366;">App / Viewer</span>
                 <span class="arrow" style="color: #3fb950;">→</span>
@@ -89,7 +89,7 @@
                 <div class="demo-num">01</div>
                 <div class="demo-info">
                     <div class="demo-title">Basic UMD / IIFE</div>
-                    <div class="demo-desc">ทดสอบโหลดแบบ &lt;script&gt; ธรรมดา — hideko-code-block.umd.js</div>
+                    <div class="demo-desc">Verify standard &lt;script&gt; tag loading via hideko-code-block.umd.js and global namespace.</div>
                 </div>
                 <span class="demo-badge">UMD</span>
                 <span class="arrow">→</span>
@@ -98,7 +98,7 @@
                 <div class="demo-num">02</div>
                 <div class="demo-info">
                     <div class="demo-title">ESM Module</div>
-                    <div class="demo-desc">ทดสอบโหลดแบบ &lt;script type="module"&gt; — hideko-code-block.js</div>
+                    <div class="demo-desc">Verify ES Module imports via &lt;script type="module"&gt; and dynamic language imports.</div>
                 </div>
                 <span class="demo-badge">ESM</span>
                 <span class="arrow">→</span>
@@ -107,7 +107,7 @@
                 <div class="demo-num">03</div>
                 <div class="demo-info">
                     <div class="demo-title">All 7 Themes</div>
-                    <div class="demo-desc">เปรียบเทียบ Dark, Light, Dracula, One Dark, Nord, Monokai, GitHub Dark</div>
+                    <div class="demo-desc">Compare Dark, Light, Dracula, One Dark, Nord, Monokai, and GitHub Dark side by side.</div>
                 </div>
                 <span class="demo-badge">Themes</span>
                 <span class="arrow">→</span>
@@ -115,8 +115,8 @@
             <a href="04-multi-languages.html" class="demo-card">
                 <div class="demo-num">04</div>
                 <div class="demo-info">
-                    <div class="demo-title">Multi Languages</div>
-                    <div class="demo-desc">ไฮไลต์ JS, Python, SQL, CSS, HTML, JSON, Rust, Go พร้อมกัน</div>
+                    <div class="demo-title">Multi-Language Rendering</div>
+                    <div class="demo-desc">Simultaneously highlight JavaScript, Python, SQL, CSS, HTML, JSON, Rust, and Go.</div>
                 </div>
                 <span class="demo-badge">Languages</span>
                 <span class="arrow">→</span>
@@ -124,8 +124,8 @@
             <a href="05-auto-scanner.html" class="demo-card">
                 <div class="demo-num">05</div>
                 <div class="demo-info">
-                    <div class="demo-title">Auto Scanner</div>
-                    <div class="demo-desc">highlightAll() สแกน DOM ทุกรูปแบบ: class, data-lang, h-lang</div>
+                    <div class="demo-title">Auto DOM Scanner</div>
+                    <div class="demo-desc">highlightAll() DOM discovery across classes, data-lang, h-lang, and custom tags.</div>
                 </div>
                 <span class="demo-badge">Scanner</span>
                 <span class="arrow">→</span>
@@ -134,7 +134,7 @@
                 <div class="demo-num">06</div>
                 <div class="demo-info">
                     <div class="demo-title">Manual Highlight API</div>
-                    <div class="demo-desc">เรียก highlight() ตรง ๆ เพื่อแปลงสตริงโค้ดเป็น HTML ด้วยมือ</div>
+                    <div class="demo-desc">Direct low-level highlight() invocation to convert raw code strings directly to HTML.</div>
                 </div>
                 <span class="demo-badge">API</span>
                 <span class="arrow">→</span>
@@ -142,8 +142,8 @@
             <a href="07-dynamic-inject.html" class="demo-card">
                 <div class="demo-num">07</div>
                 <div class="demo-info">
-                    <div class="demo-title">Dynamic Inject</div>
-                    <div class="demo-desc">ฉีดบล็อกโค้ดใหม่เข้า DOM ทีหลัง แล้วสั่งไฮไลต์</div>
+                    <div class="demo-title">Dynamic Injection</div>
+                    <div class="demo-desc">Dynamically inject new code blocks into the DOM and highlight them without double-processing.</div>
                 </div>
                 <span class="demo-badge">Dynamic</span>
                 <span class="arrow">→</span>
@@ -152,7 +152,7 @@
                 <div class="demo-num">08</div>
                 <div class="demo-info">
                     <div class="demo-title">Copy Button</div>
-                    <div class="demo-desc">ปุ่มคัดลอกโค้ดต้นฉบับไปยัง Clipboard</div>
+                    <div class="demo-desc">Automatic one-click copy button extracting clean raw code directly into clipboard.</div>
                 </div>
                 <span class="demo-badge">Copy</span>
                 <span class="arrow">→</span>
@@ -161,7 +161,7 @@
                 <div class="demo-num">09</div>
                 <div class="demo-info">
                     <div class="demo-title">Viewport Lazy Load</div>
-                    <div class="demo-desc">IntersectionObserver ไฮไลต์โค้ดเฉพาะเมื่อ scroll มาถึงหน้าจอ</div>
+                    <div class="demo-desc">IntersectionObserver deferred highlighting only when blocks enter the visible viewport.</div>
                 </div>
                 <span class="demo-badge">Lazy</span>
                 <span class="arrow">→</span>
@@ -170,7 +170,7 @@
                 <div class="demo-num">10</div>
                 <div class="demo-info">
                     <div class="demo-title">Virtual Buffer (50k Lines)</div>
-                    <div class="demo-desc">จัดการโค้ด 10 ถึง 50,000 บรรทัดด้วย VirtualBuffer & Adaptive Threshold</div>
+                    <div class="demo-desc">Handle 10 to 50,000+ lines seamlessly using VirtualBuffer & adaptive thresholding at 60 FPS.</div>
                 </div>
                 <span class="demo-badge" style="background: rgba(247, 120, 186, 0.2); color: #f778ba;">Virtual</span>
                 <span class="arrow">→</span>
@@ -179,7 +179,7 @@
                 <div class="demo-num">11</div>
                 <div class="demo-info">
                     <div class="demo-title">Line Numbers & Highlighting</div>
-                    <div class="demo-desc">เลขบรรทัด & ไฮไลต์เฉพาะบรรทัด รองรับทั้ง Normal และ Virtual Mode</div>
+                    <div class="demo-desc">Gutter line numbers & targeted line highlighting across normal and virtual buffer modes.</div>
                 </div>
                 <span class="demo-badge" style="background: rgba(255, 215, 0, 0.2); color: #ffd700;">Gutter</span>
                 <span class="arrow">→</span>

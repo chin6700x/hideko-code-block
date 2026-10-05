@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,21 +80,21 @@
             <span id="badge-3" class="status-badge status-pending">Pending</span>
         </div>
         <button class="btn-scroll" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })">
-            ⬇️ Scroll ไปล่างสุด
+            ⬇️ Scroll to Bottom
         </button>
     </div>
 
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1 style="margin-top: 12px;">Demo 09: Viewport Lazy Loading (IntersectionObserver)</h1>
         <p class="desc">
-            ทดสอบการทำ <strong>Lazy Loading ด้วย IntersectionObserver</strong> ผ่านตัวเลือก <code>{ lazy: true }</code><br>
-            บล็อกโค้ดที่อยู่ด้านล่างหน้าจอจะ<strong>ยังไม่ถูกไฮไลต์และยังไม่ดึงไฟล์ภาษา</strong>จนกว่าจะเลื่อนจอลงมาใกล้ถึง
+            Testing <strong>IntersectionObserver Lazy Loading</strong> via <code>{ lazy: true }</code> option.<br>
+            Code blocks placed below the viewport are <strong>deferred and language grammars are not fetched</strong> until scrolled close to the viewport.
         </p>
 
-        <!-- Block 1: อยู่บนสุด (ควรถูกไฮไลต์ทันที) -->
+        <!-- Block 1: Top (Immediate highlight) -->
         <div class="section" id="section-1">
-            <h2>บล็อก #1: JavaScript (อยู่ส่วนบนสุด — Visible ทันที)</h2>
+            <h2>Block #1: JavaScript (Top Section — Immediately Visible)</h2>
             <pre><code class="language-javascript">
 // Block 1 — Immediate highlight in viewport
 function calculateTotal(items) {
@@ -105,12 +105,12 @@ console.log('Total:', calculateTotal([{ price: 100, quantity: 2 }]));
         </div>
 
         <div class="scroll-spacer">
-            ↕️ เลื่อนหน้าจอลง (Scroll Down) เพื่อดูบล็อกถัดไป... (ระยะ 700px)
+            ↕️ Scroll down to see next block... (700px distance)
         </div>
 
-        <!-- Block 2: อยู่ตรงกลาง -->
+        <!-- Block 2: Middle -->
         <div class="section" id="section-2">
-            <h2>บล็อก #2: Python (อยู่กลางหน้า — ไฮไลต์เมื่อ Scroll มาถึง)</h2>
+            <h2>Block #2: Python (Middle Section — Highlighted on scroll)</h2>
             <pre><code class="language-python">
 # Block 2 — Lazy highlighted when scrolled into view
 import statistics
@@ -127,12 +127,12 @@ print(analyze_dataset([10.5, 20.2, 35.8, 42.0]))
         </div>
 
         <div class="scroll-spacer">
-            ↕️ เลื่อนหน้าจอลงอีก (ระยะ 700px) เพื่อไปยังบล็อกสุดท้าย...
+            ↕️ Scroll down further (700px distance) to reach the final block...
         </div>
 
-        <!-- Block 3: อยู่ล่างสุด -->
+        <!-- Block 3: Bottom -->
         <div class="section" id="section-3">
-            <h2>บล็อก #3: SQL (อยู่ล่างสุด — ไฮไลต์เมื่อ Scroll ถึง)</h2>
+            <h2>Block #3: SQL (Bottom Section — Highlighted on reach)</h2>
             <pre><code class="language-sql">
 -- Block 3 — Lazy highlighted at the bottom
 SELECT 
@@ -150,10 +150,10 @@ LIMIT 50;
             </code></pre>
         </div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br></div>
     </div>
 
-    <!-- โหลด Core Bundle -->
+    <!-- Load Core Bundle -->
     <script src="../hideko-code-block.umd.js"></script>
 
     <script>
@@ -199,8 +199,8 @@ LIMIT 50;
             const b1Processed = b1.getAttribute('data-hideko-processed') === 'true' || b1.parentElement.getAttribute('data-hideko-processed') === 'true';
             const b3Processed = b3.getAttribute('data-hideko-processed') === 'true' || b3.parentElement.getAttribute('data-hideko-processed') === 'true';
 
-            assert('บล็อก #1 (ใน viewport): ไฮไลต์ทันที', b1Processed);
-            assert('บล็อก #3 (นอก viewport ด้านล่าง): ยังไม่ถูกประมวลผล (Lazy Waiting)', !b3Processed);
+            assert('Block #1 (in viewport): Highlighted immediately', b1Processed);
+            assert('Block #3 (outside viewport below): Pending execution (Lazy Waiting)', !b3Processed);
         }, 300);
 
         // Keep HUD updated on scroll

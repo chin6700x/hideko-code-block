@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,16 +27,16 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1>Demo 08: Copy Button</h1>
-        <p class="desc">ทดสอบปุ่ม Copy ที่ถูกสร้างอัตโนมัติ — คัดลอกโค้ดต้นฉบับ (ไม่รวม HTML tags) ไปยัง Clipboard</p>
+        <p class="desc">Testing automated one-click copy button insertion — copying raw code text (excluding HTML tags) to the clipboard.</p>
 
         <div class="instruction">
-            💡 <strong>วิธีทดสอบ:</strong> กดปุ่ม Copy บนมุมขวาบนของแต่ละบล็อกโค้ด → แล้ววาง (Ctrl+V / Cmd+V) ในช่องด้านล่าง เพื่อตรวจสอบว่าได้โค้ดต้นฉบับที่ถูกต้อง
+            💡 <strong>How to test:</strong> Click the Copy button on the top-right corner of any code block → then paste (Ctrl+V / Cmd+V) into the test area below to verify clean code extraction.
         </div>
 
         <div class="section">
-            <h2>บล็อก 1: JavaScript</h2>
+            <h2>Block 1: JavaScript</h2>
             <pre><code class="language-javascript">// Fibonacci sequence
 function fibonacci(n) {
     if (n <= 1) return n;
@@ -51,7 +51,7 @@ console.log(fibonacci(10)); // Output: 55</code></pre>
         </div>
 
         <div class="section">
-            <h2>บล็อก 2: Python</h2>
+            <h2>Block 2: Python</h2>
             <pre><code class="language-python">from pathlib import Path
 import json
 
@@ -69,7 +69,7 @@ print(f"Loaded {len(config)} settings")</code></pre>
         </div>
 
         <div class="section">
-            <h2>บล็อก 3: SQL</h2>
+            <h2>Block 3: SQL</h2>
             <pre><code class="language-sql">-- Top 10 customers by lifetime value
 SELECT
     c.customer_id,
@@ -86,11 +86,11 @@ LIMIT 10;</code></pre>
         </div>
 
         <div class="section">
-            <h2>📋 วางโค้ดที่ Copy ได้ที่นี่ (Paste Area)</h2>
-            <div id="paste-area" contenteditable="true" placeholder="กด Ctrl+V / Cmd+V เพื่อวางโค้ดที่คัดลอกมา...">คลิกที่นี่แล้ววาง (Paste) โค้ดที่ Copy มา...</div>
+            <h2>📋 Paste Copied Code Here (Paste Area)</h2>
+            <div id="paste-area" contenteditable="true" placeholder="Press Ctrl+V / Cmd+V to paste copied code...">Click here and paste (Ctrl+V / Cmd+V) copied code...</div>
         </div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br></div>
     </div>
 
     <script src="../hideko-code-block.umd.js"></script>
@@ -117,17 +117,17 @@ LIMIT 10;</code></pre>
                 const copyBtn = pre.querySelector('button, .hideko-copy-btn, [class*="copy"]');
                 if (copyBtn) {
                     copyButtonCount++;
-                    assert(`บล็อก ${i + 1}: มีปุ่ม Copy`, true);
+                    assert(`Block ${i + 1}: Copy button present`, true);
                 } else {
-                    assert(`บล็อก ${i + 1}: มีปุ่ม Copy`, false);
+                    assert(`Block ${i + 1}: Copy button present`, false);
                 }
 
                 // Check position relative
                 const pos = getComputedStyle(pre).position;
-                assert(`บล็อก ${i + 1}: pre มี position: relative`, pos === 'relative');
+                assert(`Block ${i + 1}: pre has position: relative`, pos === 'relative');
             });
 
-            assert(`ปุ่ม Copy ทั้งหมด: ${copyButtonCount} / ${pres.length}`, copyButtonCount === pres.length);
+            assert(`Total copy buttons: ${copyButtonCount} / ${pres.length}`, copyButtonCount === pres.length);
         });
 
         // Listen for paste event
@@ -135,9 +135,9 @@ LIMIT 10;</code></pre>
             setTimeout(() => {
                 const pastedText = document.getElementById('paste-area').innerText;
                 if (pastedText && pastedText.trim().length > 10) {
-                    assert('ข้อความที่วาง (Paste) ไม่ว่าง', true);
-                    assert('ข้อความที่วางไม่มี HTML tags', !pastedText.includes('<span'));
-                    assert('ข้อความที่วางไม่มี mtk classes', !pastedText.includes('mtk'));
+                    assert('Pasted text is not empty', true);
+                    assert('Pasted text contains no HTML tags', !pastedText.includes('<span'));
+                    assert('Pasted text contains no mtk classes', !pastedText.includes('mtk'));
                 }
             }, 100);
         });

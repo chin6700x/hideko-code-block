@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,22 +39,22 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1>Demo 07: Dynamic Inject</h1>
-        <p class="desc">จำลองสถานการณ์จริง (SPA / Chat App) — กดปุ่มเพื่อฉีดบล็อกโค้ดใหม่เข้า DOM แล้วสั่งไฮไลต์</p>
+        <p class="desc">Simulating real-world scenarios (SPA / Chat Applications) — dynamically inject new code blocks into the DOM and highlight them on-the-fly.</p>
 
         <div class="btn-row">
-            <button class="btn" onclick="injectCode('javascript')">➕ เพิ่มโค้ด JavaScript</button>
-            <button class="btn secondary" onclick="injectCode('python')">➕ เพิ่มโค้ด Python</button>
-            <button class="btn secondary" onclick="injectCode('sql')">➕ เพิ่มโค้ด SQL</button>
-            <button class="btn danger" onclick="clearAll()">🗑️ ล้างทั้งหมด</button>
-            <button class="btn" style="background:#6e40c9" onclick="runTests()">🧪 รันทดสอบ</button>
+            <button class="btn" onclick="injectCode('javascript')">➕ Add JavaScript</button>
+            <button class="btn secondary" onclick="injectCode('python')">➕ Add Python</button>
+            <button class="btn secondary" onclick="injectCode('sql')">➕ Add SQL</button>
+            <button class="btn danger" onclick="clearAll()">🗑️ Clear All</button>
+            <button class="btn" style="background:#6e40c9" onclick="runTests()">🧪 Run Tests</button>
         </div>
 
-        <div id="counter">บล็อกที่ฉีดแล้ว: 0</div>
+        <div id="counter">Injected blocks: 0</div>
         <div id="dynamic-container"></div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br><span class="pass">กดปุ่มเพิ่มโค้ดก่อน แล้วกดปุ่มรันทดสอบ</span><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br><span class="pass">Click an Add button above, then click Run Tests</span><br></div>
     </div>
 
     <script src="../hideko-code-block.umd.js"></script>
@@ -123,18 +123,18 @@ ORDER BY month DESC;`
                 basePath: '../languages/'
             });
 
-            counterEl.textContent = `บล็อกที่ฉีดแล้ว: ${injectCount}`;
+            counterEl.textContent = `Injected blocks: ${injectCount}`;
         }
 
         function clearAll() {
             container.innerHTML = '';
             injectCount = 0;
-            counterEl.textContent = 'บล็อกที่ฉีดแล้ว: 0';
+            counterEl.textContent = 'Injected blocks: 0';
         }
 
         function runTests() {
             const results = document.getElementById('results');
-            results.innerHTML = '<strong>🧪 ผลการทดสอบ:</strong><br>';
+            results.innerHTML = '<strong>🧪 Test Results:</strong><br>';
 
             function assert(name, condition) {
                 const icon = condition ? '✅' : '❌';
@@ -143,17 +143,17 @@ ORDER BY month DESC;`
             }
 
             const blocks = container.querySelectorAll('.inject-block');
-            assert(`มีบล็อกที่ฉีดแล้ว ${blocks.length} บล็อก`, blocks.length > 0);
+            assert(`${blocks.length} injected blocks detected`, blocks.length > 0);
 
             blocks.forEach((block, i) => {
                 const code = block.querySelector('code');
                 const hasTokens = code && code.innerHTML.includes('mtk');
-                assert(`บล็อก #${i + 1}: มี Token สีไฮไลต์`, hasTokens);
+                assert(`Block #${i + 1}: Syntax tokens highlighted`, hasTokens);
             });
 
             // Test double-processing prevention
             const processed = container.querySelectorAll('[data-hideko-processed="true"]');
-            assert(`${processed.length} elements มี data-hideko-processed`, processed.length === blocks.length);
+            assert(`${processed.length} elements marked with data-hideko-processed`, processed.length === blocks.length);
 
             // Try re-highlighting — should NOT double-process
             const firstCode = container.querySelector('code');
@@ -161,7 +161,7 @@ ORDER BY month DESC;`
                 const htmlBefore = firstCode.innerHTML;
                 highlighter.highlightElement(firstCode, { theme: 'monokai', basePath: '../languages/' }).then(() => {
                     const htmlAfter = firstCode.innerHTML;
-                    assert('ไม่ถูกประมวลผลซ้ำ (double-process prevention)', htmlBefore === htmlAfter);
+                    assert('Double-processing prevented (DOM preserved)', htmlBefore === htmlAfter);
                 });
             }
         }

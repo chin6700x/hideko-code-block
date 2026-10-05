@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +25,9 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1>Demo 04: Multi Languages</h1>
-        <p class="desc">ทดสอบโหลดและไฮไลต์หลายภาษาพร้อมกัน — ตรวจสอบว่าแต่ละภาษาแยก Token สีได้ถูกต้อง</p>
+        <p class="desc">Testing simultaneous loading and syntax highlighting across multiple programming languages — verifying proper token generation.</p>
 
         <div class="lang-section">
             <span class="lang-label">JavaScript</span>
@@ -222,7 +222,7 @@ func main() {
             </code></pre>
         </div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br></div>
     </div>
 
     <script src="../dist/hideko-code-block.umd.js"></script>
@@ -242,14 +242,14 @@ func main() {
                 const el = document.querySelector(`code.language-${lang}`);
                 if (el) {
                     const hasTokens = el.innerHTML.includes('mtk');
-                    assert(`${lang}: มี Token สีไฮไลต์`, hasTokens);
+                    assert(`${lang}: Syntax tokens highlighted`, hasTokens);
                     const isPlainText = el.innerHTML === el.textContent;
-                    assert(`${lang}: ไม่ใช่ plain text`, !isPlainText);
+                    assert(`${lang}: Is not plain text`, !isPlainText);
                 } else {
-                    assert(`${lang}: element found`, false);
+                    assert(`${lang}: Element found`, false);
                 }
             });
-            assert(`ทุกภาษาถูกประมวลผล (${langs.length} ภาษา)`, true);
+            assert(`All languages processed successfully (${langs.length} languages)`, true);
         });
     </script>
 </body>

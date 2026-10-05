@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,9 +24,9 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <a href="index.html" class="back">← Back to Demo Hub</a>
         <h1>Demo 05: Auto Scanner</h1>
-        <p class="desc">ทดสอบ <code>highlightAll()</code> สแกน DOM อัตโนมัติ — รองรับทุกรูปแบบ: class, data-lang, h-lang, .hideko</p>
+        <p class="desc">Testing <code>highlightAll()</code> automatic DOM scanning — supports diverse formats: CSS class, data-lang, h-lang, and .hideko selector</p>
 
         <!-- Pattern 1: <pre><code class="language-xxx"> -->
         <div class="test-block">
@@ -88,7 +88,7 @@ func main() {
 }</div>
         </div>
 
-        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+        <div id="results"><strong>🧪 Test Results:</strong><br></div>
     </div>
 
     <script src="../hideko-code-block.umd.js"></script>
@@ -125,7 +125,7 @@ func main() {
 
             // Check processed count
             const processed = document.querySelectorAll('[data-hideko-processed="true"]');
-            assert(`ทั้งหมด ${processed.length} elements ถูกประมวลผล`, processed.length >= 6);
+            assert(`Total ${processed.length} elements processed successfully`, processed.length >= 6);
         });
     </script>
 </body>
