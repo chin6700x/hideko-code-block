@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 const languages = { IndentAction: { None: 0, Keep: 1, Indent: 2, IndentOutdent: 3, Outdent: 4 } };
 
 const conf = {

@@ -1,4 +1,11 @@
 /**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+/**
  * Hideko V8 — Optimized Mini-Monarch Lexer Engine
  * Merged from hideko-solo.js + hideko-engine.js into a single optimized engine.
  * 

@@ -1,3 +1,14 @@
+/**
+ * hideko-code-block
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 function I(t) {
   if (!t) return "";
   let e = "", i = 0;
@@ -274,6 +285,12 @@ function F(t, e, i, n = ["root"]) {
   return { html: l.join(`
 `), endStateStack: a, missingLanguages: Array.from(r) };
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 const Z = {
   assembly: "asm",
   asm: "asm",
@@ -373,6 +390,12 @@ function he(t, e = Z) {
   const s = n.includes(".") ? n.split(".").pop() : n;
   return e[s] || s;
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 const X = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>', ge = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 function Y(t) {
   const e = document.createElement("button");
@@ -412,6 +435,12 @@ function D(t) {
   }
   return e;
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 class te {
   /**
    * @param {string} [initialText='']
@@ -468,6 +497,12 @@ class te {
     return this.lines.slice(n, s);
   }
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 const V = /* @__PURE__ */ new Map(), z = /* @__PURE__ */ new Map(), ne = /* @__PURE__ */ new WeakMap();
 function ie(t, e, i, n, s, l) {
   if (!n && (!s || s.size === 0))
@@ -617,6 +652,12 @@ async function G(t, e = {}) {
   const b = String(m + w).length, L = Math.max(32, b * 8 + 18), v = ie(g, w, m, h, p, L), C = i ? t : document.createElement("code");
   C.innerHTML = v, i || (n.innerHTML = "", n.appendChild(C)), e.copyButton !== !1 && (n.style.position = "relative", n.appendChild(Y(r)));
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 async function be(t, e = {}) {
   if (!t || typeof t != "string") return "";
   const i = e.theme || "dark";
@@ -680,6 +721,12 @@ function ke(t = {}) {
     }
   };
 }
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 const we = "1.0.0", U = {
   version: we,
   highlight: W,

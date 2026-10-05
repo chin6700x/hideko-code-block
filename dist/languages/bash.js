@@ -1,1 +1,12 @@
-export const language={tokenizer:{root:[[/^#.*/,"comment"],[/\b(npm|git|echo|ls|cd|pwd|mkdir|rm|cp|mv|sudo|apt|brew|yarn|pnpm|export|set|source)\b/,"keyword"],[/\b(install|remove|update|add|init|run|start|build|test|commit|push|pull)\b/,"identifier"],[/--[a-zA-Z0-9_-]+/,"attribute.name"],[/-[a-zA-Z0-9]+/,"attribute.name"],[/"([^"\\]|\\.)*"/,"string"],[/'([^'\\]|\\.)*'/,"string"]]}},conf={comments:{lineComment:"#"}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("bash",language);export default{language,conf:typeof conf<"u"?conf:{}};
+/**
+ * hideko-code-block
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */export const language={tokenizer:{root:[[/^#.*/,"comment"],[/\b(npm|git|echo|ls|cd|pwd|mkdir|rm|cp|mv|sudo|apt|brew|yarn|pnpm|export|set|source)\b/,"keyword"],[/\b(install|remove|update|add|init|run|start|build|test|commit|push|pull)\b/,"identifier"],[/--[a-zA-Z0-9_-]+/,"attribute.name"],[/-[a-zA-Z0-9]+/,"attribute.name"],[/"([^"\\]|\\.)*"/,"string"],[/'([^'\\]|\\.)*'/,"string"]]}},conf={comments:{lineComment:"#"}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("bash",language);export default{language,conf:typeof conf<"u"?conf:{}};

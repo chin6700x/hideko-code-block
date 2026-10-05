@@ -1,4 +1,11 @@
 /**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+/**
  * VirtualBuffer — Lightweight In-Memory Line Buffer for Hideko Lite
  * Manages raw code lines in memory with O(1) access and zero DOM overhead.
  */

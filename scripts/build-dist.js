@@ -12,6 +12,18 @@ const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
 const DIST_LANG_DIR = path.resolve(DIST_DIR, 'languages');
 const DIST_NODE_DIR = path.resolve(DIST_DIR, 'node');
 
+/**
+ * hideko-code-block Post-Build Tasks
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+const JS_BANNER = `/**
+ * hideko-code-block
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */\n`;
+
 console.log('🚀 Starting hideko-code-block Post-Build Tasks...\n');
 
 if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
@@ -42,7 +54,7 @@ async function postBuild() {
         for (const file of langFiles) {
             if (file === 'language-aliases.js') {
                 const content = fs.readFileSync(path.join(langSrcDir, file), 'utf8');
-                const minified = esbuild.transformSync(content, { minify: true, target: 'es2020' }).code;
+                const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
                 fs.writeFileSync(path.join(DIST_LANG_DIR, file), minified, 'utf8');
                 continue;
             }
@@ -63,7 +75,7 @@ export default { language, conf: typeof conf !== 'undefined' ? conf : {} };
             content = content.replace(/export\s+default\s+[^;]+;?\s*$/m, '');
             content = content.trimEnd() + '\n' + selfRegisterCode;
 
-            const minified = esbuild.transformSync(content, { minify: true, target: 'es2020' }).code;
+            const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
             fs.writeFileSync(path.join(DIST_LANG_DIR, file), minified, 'utf8');
         }
 
@@ -83,7 +95,7 @@ ${exportsList}
 };
 export default allLanguages;
 `;
-        const minifiedIndex = esbuild.transformSync(indexContent, { minify: true, target: 'es2020' }).code;
+        const minifiedIndex = esbuild.transformSync(indexContent, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
         fs.writeFileSync(path.join(DIST_LANG_DIR, 'index.js'), minifiedIndex, 'utf8');
         console.log(`  ✓ ${languageNames.length} language definitions compiled to dist/languages/`);
 
@@ -101,6 +113,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url', 'perf_hooks']
         });
 
@@ -113,6 +126,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url']
         });
 
@@ -125,6 +139,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url', 'perf_hooks']
         });
         console.log('  ✓ dist/node/index.js, file-converter.js, cli.js');

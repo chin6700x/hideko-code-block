@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 
 import fs from 'fs';
 import path from 'path';
@@ -13,3 +19,4 @@ const targetPath = fs.existsSync(builtCliPath) ? builtCliPath : srcCliPath;
 
 const { runCli } = await import(`file://${targetPath}`);
 runCli();
+

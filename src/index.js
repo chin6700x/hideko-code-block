@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 import { highlight, highlightLines, tokenizeLinesToState, registerLanguage } from './core/hideko-v8.js';
 import { highlightAll, highlightElement, virtualRegistry } from './browser/scanner.js';
 import { highlightMarkdown, createMarkedExtension } from './browser/markdown-scanner.js';

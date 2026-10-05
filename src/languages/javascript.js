@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 import { conf as conf$1, language as language$1 } from './typescript.js';
 
 const conf = conf$1;

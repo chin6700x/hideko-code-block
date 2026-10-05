@@ -39,7 +39,7 @@
     "markdown-highlight",
     "fast"
   ],
-  "author": "Chin6700x <Chin6700X@gmail.com>",
+  "author": "Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.25.0",

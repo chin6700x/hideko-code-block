@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 import { highlight as v8Highlight } from '../core/hideko-v8.js';
 import { loadLanguageBrowser } from './scanner.js';
 

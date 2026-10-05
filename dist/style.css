@@ -1,7 +1,10 @@
-/* ============================================================
-   Hideko Lite Highlighter Styles
-   Features: 15 Token Classes, Multi-Theme Presets, Line Numbers & Highlighting
-   ============================================================ */
+/*!
+ * hideko-code-block
+ * Features: 15 Token Classes, Multi-Theme Presets, Line Numbers & Highlighting
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
 
 :root,
 [data-theme="dark"] {

@@ -1,4 +1,11 @@
 /**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+/**
  * Common Languages Bundle for Hideko V8
  * Pre-bundles the top 10 most popular programming languages for zero-config offline usage.
  */

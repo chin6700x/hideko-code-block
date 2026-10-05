@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

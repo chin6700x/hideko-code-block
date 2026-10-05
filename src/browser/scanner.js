@@ -1,3 +1,10 @@
+/**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
 import { highlight as v8Highlight, highlightLines as v8HighlightLines, registerLanguage as v8RegisterLanguage } from '../core/hideko-v8.js';
 import { languageAliases, detectLanguage } from '../languages/language-aliases.js';
 import { createCopyButton, parseHighlightLines } from '../core/utils.js';

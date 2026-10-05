@@ -1,4 +1,11 @@
 /**
+ * hideko-code-block
+ *
+ * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
+ * @license MIT License
+ */
+
+/**
  * Shared Utilities for Hideko
  */
 
