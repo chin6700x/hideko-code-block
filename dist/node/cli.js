@@ -57,9 +57,3 @@ Examples:
   npx hideko convert query.sql -n --highlight 3-5
 `)}function ae(){let t=Array.from(new Set(Object.values(H))).sort();console.log(`Supported Languages (${t.length}):`),console.log(t.map(e=>`  \u2022 ${e}`).join(`
 `))}export{Le as runCli};
-/**
- * hideko-code-block
- *
- * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
- * @license MIT License
- */

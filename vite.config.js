@@ -2,6 +2,10 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
+  esbuild: {
+    legalComments: 'none',
+    banner: `/**\n * hideko-code-block\n * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>\n * @license MIT License\n */`
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
@@ -13,8 +17,7 @@ export default defineConfig({
     rollupOptions: {
       external: (id) => id.includes('file-converter') || id.endsWith('.js') && id.includes('/node/') || ['fs', 'path', 'url', 'perf_hooks'].includes(id),
       output: {
-        exports: 'named',
-        banner: `/**\n * hideko-code-block\n * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>\n * @license MIT License\n */`
+        exports: 'named'
       }
     }
   },

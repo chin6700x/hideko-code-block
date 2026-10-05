@@ -52,17 +52,17 @@ async function postBuild() {
         const languageNames = [];
 
         for (const file of langFiles) {
+            let content = fs.readFileSync(path.join(langSrcDir, file), 'utf8');
+            content = content.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
+
             if (file === 'language-aliases.js') {
-                const content = fs.readFileSync(path.join(langSrcDir, file), 'utf8');
-                const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
+                const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER, legalComments: 'none' }).code;
                 fs.writeFileSync(path.join(DIST_LANG_DIR, file), minified, 'utf8');
                 continue;
             }
 
             const langName = path.basename(file, '.js');
             languageNames.push(langName);
-
-            let content = fs.readFileSync(path.join(langSrcDir, file), 'utf8');
 
             // Auto-registration in browser environment
             const selfRegisterCode = `
@@ -75,7 +75,7 @@ export default { language, conf: typeof conf !== 'undefined' ? conf : {} };
             content = content.replace(/export\s+default\s+[^;]+;?\s*$/m, '');
             content = content.trimEnd() + '\n' + selfRegisterCode;
 
-            const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
+            const minified = esbuild.transformSync(content, { minify: true, target: 'es2020', banner: JS_BANNER, legalComments: 'none' }).code;
             fs.writeFileSync(path.join(DIST_LANG_DIR, file), minified, 'utf8');
         }
 
@@ -84,10 +84,7 @@ export default { language, conf: typeof conf !== 'undefined' ? conf : {} };
         const exportsList = languageNames.map(name => `    ${name.replace(/-/g, '_')}`).join(',\n');
         const reexports = languageNames.map(name => `export { default as ${name.replace(/-/g, '_')} } from './${name}.js';`).join('\n');
 
-        const indexContent = `/**
- * Hideko Code Block Modular Languages Bundle
- */
-${imports}
+        const indexContent = `${imports}
 export { languageAliases, languageAliases as extensionMap, detectLanguage } from './language-aliases.js';
 ${reexports}
 export const allLanguages = {
@@ -95,7 +92,7 @@ ${exportsList}
 };
 export default allLanguages;
 `;
-        const minifiedIndex = esbuild.transformSync(indexContent, { minify: true, target: 'es2020', banner: JS_BANNER }).code;
+        const minifiedIndex = esbuild.transformSync(indexContent, { minify: true, target: 'es2020', banner: JS_BANNER, legalComments: 'none' }).code;
         fs.writeFileSync(path.join(DIST_LANG_DIR, 'index.js'), minifiedIndex, 'utf8');
         console.log(`  ✓ ${languageNames.length} language definitions compiled to dist/languages/`);
 
@@ -113,6 +110,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            legalComments: 'none',
             banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url', 'perf_hooks']
         });
@@ -126,6 +124,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            legalComments: 'none',
             banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url']
         });
@@ -139,6 +138,7 @@ export default allLanguages;
             platform: 'node',
             target: 'node18',
             minify: true,
+            legalComments: 'none',
             banner: { js: JS_BANNER },
             external: ['fs', 'path', 'url', 'perf_hooks']
         });
@@ -160,61 +160,15 @@ export default allLanguages;
             console.log('  ✓ Created compatibility alias: hideko-highlight.js');
         }
 
-        // ====================================================================
-        // 5. Bundle Demo directory into dist/demo/ and rewrite relative paths
-        // ====================================================================
-        console.log('📦 Bundling demo into dist/demo...');
-        const demoSrcDir = path.resolve(ROOT_DIR, 'demo');
+        // Clean up redundant dist/demo and dist/index.html if they exist
         const distDemoDir = path.resolve(DIST_DIR, 'demo');
-
-        if (!fs.existsSync(distDemoDir)) {
-            fs.mkdirSync(distDemoDir, { recursive: true });
+        const distIndexHtml = path.resolve(DIST_DIR, 'index.html');
+        if (fs.existsSync(distDemoDir)) {
+            fs.rmSync(distDemoDir, { recursive: true, force: true });
         }
-
-        const demoFiles = fs.readdirSync(demoSrcDir);
-        for (const file of demoFiles) {
-            const srcPath = path.join(demoSrcDir, file);
-            const destPath = path.join(distDemoDir, file);
-
-            if (fs.statSync(srcPath).isDirectory()) {
-                fs.cpSync(srcPath, destPath, { recursive: true });
-                continue;
-            }
-
-            if (file.endsWith('.html') || file.endsWith('.md')) {
-                let html = fs.readFileSync(srcPath, 'utf8');
-                // Adjust paths from demo/ (where dist is ../dist/) to dist/demo/ (where dist is ../)
-                html = html
-                    .replace(/\.\.\/dist\/style\.min\.css/g, '../style.min.css')
-                    .replace(/\.\.\/dist\/style\.css/g, '../style.css')
-                    .replace(/\.\.\/dist\/hideko-code-block\.umd\.js/g, '../hideko-code-block.umd.js')
-                    .replace(/\.\.\/dist\/hideko-code-block\.js/g, '../hideko-code-block.js')
-                    .replace(/\.\.\/dist\/hideko-highlight\.min\.js/g, '../hideko-code-block.umd.js')
-                    .replace(/\.\.\/dist\/hideko-highlight\.js/g, '../hideko-code-block.js')
-                    .replace(/\.\.\/dist\/languages\//g, '../languages/');
-                fs.writeFileSync(destPath, html, 'utf8');
-            } else {
-                fs.copyFileSync(srcPath, destPath);
-            }
+        if (fs.existsSync(distIndexHtml)) {
+            fs.unlinkSync(distIndexHtml);
         }
-        console.log(`  ✓ ${demoFiles.length} demo files copied and path-corrected into dist/demo/`);
-
-        // Generate dist/index.html redirecting to demo/index.html
-        const distIndexHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=demo/index.html">
-    <title>Hideko Code Block - Redirecting</title>
-    <script>window.location.replace("demo/index.html");</script>
-</head>
-<body style="background:#0d1117;color:#c9d1d9;font-family:sans-serif;padding:40px;text-align:center;">
-    <p>Redirecting to <a href="demo/index.html" style="color:#58a6ff;">Demo Hub...</a></p>
-</body>
-</html>
-`;
-        fs.writeFileSync(path.resolve(DIST_DIR, 'index.html'), distIndexHtml, 'utf8');
-        console.log('  ✓ dist/index.html (redirect to demo/index.html)');
 
         console.log('\n✨ Build and post-processing completed successfully!\n');
     } catch (err) {

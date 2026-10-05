@@ -4,9 +4,4 @@
  * @license MIT License
  */
 
-/**
- * hideko-code-block
- *
- * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
- * @license MIT License
- */export const conf={comments:{lineComment:"//",blockComment:["/*","*/"]},brackets:[["{","}"],["[","]"]],autoClosingPairs:[{open:"{",close:"}"},{open:"[",close:"]"},{open:'"',close:'"',notIn:["string"]}]},language={tokenPostfix:".json",keywords:["true","false","null"],tokenizer:{root:[[/"/,{token:"string.quote",next:"@string"}],[/[{}[\\]]/,"@brackets"],[/[a-z_$][\\w$]*/,{cases:{"@keywords":"keyword","@default":"identifier"}}],[/-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?/,"number"],[/[ \\t\\r\\n]+/,""],[/\/\/.*/,"comment"],[/\/\*/,"comment","@blockcomment"]],string:[[/[^\\\\"]+/,"string"],[/\\\\./,"string.escape"],[/"/,{token:"string.quote",next:"@pop"}]],blockcomment:[[/[^/*]+/,"comment"],[/\*\//,"comment","@pop"],[/[/*]/,"comment"]]}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("json",language);export default{language,conf:typeof conf<"u"?conf:{}};
+export const conf={comments:{lineComment:"//",blockComment:["/*","*/"]},brackets:[["{","}"],["[","]"]],autoClosingPairs:[{open:"{",close:"}"},{open:"[",close:"]"},{open:'"',close:'"',notIn:["string"]}]},language={tokenPostfix:".json",keywords:["true","false","null"],tokenizer:{root:[[/"/,{token:"string.quote",next:"@string"}],[/[{}[\\]]/,"@brackets"],[/[a-z_$][\\w$]*/,{cases:{"@keywords":"keyword","@default":"identifier"}}],[/-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?/,"number"],[/[ \\t\\r\\n]+/,""],[/\/\/.*/,"comment"],[/\/\*/,"comment","@blockcomment"]],string:[[/[^\\\\"]+/,"string"],[/\\\\./,"string.escape"],[/"/,{token:"string.quote",next:"@pop"}]],blockcomment:[[/[^/*]+/,"comment"],[/\*\//,"comment","@pop"],[/[/*]/,"comment"]]}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("json",language);export default{language,conf:typeof conf<"u"?conf:{}};

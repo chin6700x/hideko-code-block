@@ -35,9 +35,3 @@ import $ from"fs";import m from"path";import{fileURLToPath as X}from"url";functi
 ${b}
 </body>
 </html>`}async function pe(n,e={}){let t=m.resolve(process.cwd(),n);if(!$.existsSync(t))throw new Error(`Hideko: File not found "${n}"`);let r=await $.promises.readFile(t,"utf8"),s=e.lang||K(m.basename(t)),i=e.title||m.basename(t),a=await ne(r,{...e,lang:s,title:i}),l=null;if(e.output){l=m.resolve(process.cwd(),e.output);let o=m.dirname(l);$.existsSync(o)||await $.promises.mkdir(o,{recursive:!0}),await $.promises.writeFile(l,a,"utf8")}return{html:a,rawCode:r,lang:s,outputPath:l}}export{te as getEmbeddedCss,pe as highlightFile,ne as highlightString,ee as loadLanguageNode,B as parseHighlightLines};
-/**
- * hideko-code-block
- *
- * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
- * @license MIT License
- */

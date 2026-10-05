@@ -4,9 +4,4 @@
  * @license MIT License
  */
 
-/**
- * hideko-code-block
- *
- * @author Wirot Chookeaw Chin6700x <Chin6700X@gmail.com>
- * @license MIT License
- */export const conf={comments:{lineComment:"#"},brackets:[["{","}"],["[","]"],["(",")"]]},language={defaultToken:"",tokenPostfix:".dockerfile",keywords:["FROM","MAINTAINER","RUN","CMD","EXPOSE","ENV","ADD","COPY","ENTRYPOINT","VOLUME","USER","WORKDIR","ONBUILD","LABEL","STOPSIGNAL","HEALTHCHECK","SHELL"],tokenizer:{root:[[/^[ \t]*[a-zA-Z]+/,{cases:{"@keywords":"keyword","@default":"identifier"}}],[/[a-zA-Z_]\w*/,"identifier"],[/[{}()\[\]]/,"@brackets"],[/"([^"\\]|\\.)*"/,"string"],[/'([^'\\]|\\.)*'/,"string"],[/#.*/,"comment"],[/[ \t\r\n]+/,""]]}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("dockerfile",language);export default{language,conf:typeof conf<"u"?conf:{}};
+export const conf={comments:{lineComment:"#"},brackets:[["{","}"],["[","]"],["(",")"]]},language={defaultToken:"",tokenPostfix:".dockerfile",keywords:["FROM","MAINTAINER","RUN","CMD","EXPOSE","ENV","ADD","COPY","ENTRYPOINT","VOLUME","USER","WORKDIR","ONBUILD","LABEL","STOPSIGNAL","HEALTHCHECK","SHELL"],tokenizer:{root:[[/^[ \t]*[a-zA-Z]+/,{cases:{"@keywords":"keyword","@default":"identifier"}}],[/[a-zA-Z_]\w*/,"identifier"],[/[{}()\[\]]/,"@brackets"],[/"([^"\\]|\\.)*"/,"string"],[/'([^'\\]|\\.)*'/,"string"],[/#.*/,"comment"],[/[ \t\r\n]+/,""]]}};const e=typeof globalThis<"u"?globalThis.HidekoCodeBlock||globalThis.HidekoHighlight||globalThis.Hideko:null;e&&typeof e.registerLanguage=="function"&&e.registerLanguage("dockerfile",language);export default{language,conf:typeof conf<"u"?conf:{}};
