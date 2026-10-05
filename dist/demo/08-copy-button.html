@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 08 — Copy Button</title>
+    <link rel="stylesheet" href="../style.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; }
+        .section { margin-bottom: 32px; }
+        .section h2 { color: #3fb950; font-size: 1.1rem; margin-bottom: 12px; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+        #paste-area {
+            background: #161b22; border: 2px dashed #30363d; border-radius: 8px;
+            padding: 16px; min-height: 80px; font-family: monospace; font-size: 0.85rem;
+            color: #8b949e; white-space: pre-wrap; word-break: break-all;
+        }
+        #paste-area:focus { border-color: #58a6ff; outline: none; color: #c9d1d9; }
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+        .instruction { background: #1f6feb22; border: 1px solid #1f6feb55; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem; color: #79c0ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 08: Copy Button</h1>
+        <p class="desc">ทดสอบปุ่ม Copy ที่ถูกสร้างอัตโนมัติ — คัดลอกโค้ดต้นฉบับ (ไม่รวม HTML tags) ไปยัง Clipboard</p>
+
+        <div class="instruction">
+            💡 <strong>วิธีทดสอบ:</strong> กดปุ่ม Copy บนมุมขวาบนของแต่ละบล็อกโค้ด → แล้ววาง (Ctrl+V / Cmd+V) ในช่องด้านล่าง เพื่อตรวจสอบว่าได้โค้ดต้นฉบับที่ถูกต้อง
+        </div>
+
+        <div class="section">
+            <h2>บล็อก 1: JavaScript</h2>
+            <pre><code class="language-javascript">// Fibonacci sequence
+function fibonacci(n) {
+    if (n <= 1) return n;
+    let [a, b] = [0, 1];
+    for (let i = 2; i <= n; i++) {
+        [a, b] = [b, a + b];
+    }
+    return b;
+}
+
+console.log(fibonacci(10)); // Output: 55</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>บล็อก 2: Python</h2>
+            <pre><code class="language-python">from pathlib import Path
+import json
+
+def load_config(path: str = "config.json") -> dict:
+    """Load configuration from JSON file."""
+    config_path = Path(path)
+    if not config_path.exists():
+        raise FileNotFoundError(f"Config not found: {path}")
+
+    with open(config_path, 'r') as f:
+        return json.load(f)
+
+config = load_config()
+print(f"Loaded {len(config)} settings")</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>บล็อก 3: SQL</h2>
+            <pre><code class="language-sql">-- Top 10 customers by lifetime value
+SELECT
+    c.customer_id,
+    c.name,
+    COUNT(o.order_id) AS total_orders,
+    SUM(o.amount) AS lifetime_value,
+    MAX(o.order_date) AS last_order
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+WHERE o.status = 'completed'
+GROUP BY c.customer_id, c.name
+ORDER BY lifetime_value DESC
+LIMIT 10;</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>📋 วางโค้ดที่ Copy ได้ที่นี่ (Paste Area)</h2>
+            <div id="paste-area" contenteditable="true" placeholder="กด Ctrl+V / Cmd+V เพื่อวางโค้ดที่คัดลอกมา...">คลิกที่นี่แล้ววาง (Paste) โค้ดที่ Copy มา...</div>
+        </div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+    </div>
+
+    <script src="../hideko-code-block.umd.js"></script>
+
+    <script>
+        const results = document.getElementById('results');
+        function assert(name, condition) {
+            const icon = condition ? '✅' : '❌';
+            const cls = condition ? 'pass' : 'fail';
+            results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+        }
+
+        const highlighter = window.HidekoCodeBlock || window.HidekoHighlight;
+        highlighter.highlightAll('pre code', {
+            basePath: '../languages/',
+            copyButton: true
+        }).then(() => {
+            // Check copy buttons exist
+            const pres = document.querySelectorAll('.section pre');
+            assert(`${pres.length} code blocks rendered`, pres.length === 3);
+
+            let copyButtonCount = 0;
+            pres.forEach((pre, i) => {
+                const copyBtn = pre.querySelector('button, .hideko-copy-btn, [class*="copy"]');
+                if (copyBtn) {
+                    copyButtonCount++;
+                    assert(`บล็อก ${i + 1}: มีปุ่ม Copy`, true);
+                } else {
+                    assert(`บล็อก ${i + 1}: มีปุ่ม Copy`, false);
+                }
+
+                // Check position relative
+                const pos = getComputedStyle(pre).position;
+                assert(`บล็อก ${i + 1}: pre มี position: relative`, pos === 'relative');
+            });
+
+            assert(`ปุ่ม Copy ทั้งหมด: ${copyButtonCount} / ${pres.length}`, copyButtonCount === pres.length);
+        });
+
+        // Listen for paste event
+        document.getElementById('paste-area').addEventListener('paste', (e) => {
+            setTimeout(() => {
+                const pastedText = document.getElementById('paste-area').innerText;
+                if (pastedText && pastedText.trim().length > 10) {
+                    assert('ข้อความที่วาง (Paste) ไม่ว่าง', true);
+                    assert('ข้อความที่วางไม่มี HTML tags', !pastedText.includes('<span'));
+                    assert('ข้อความที่วางไม่มี mtk classes', !pastedText.includes('mtk'));
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

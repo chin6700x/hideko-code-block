@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 07 — Dynamic Inject</title>
+    <link rel="stylesheet" href="../style.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+        .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+        .btn {
+            background: #238636; color: #fff; border: none;
+            padding: 10px 20px; border-radius: 8px; cursor: pointer;
+            font-size: 0.9rem; font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #2ea043; }
+        .btn.secondary { background: #1f6feb; }
+        .btn.secondary:hover { background: #388bfd; }
+        .btn.danger { background: #da3633; }
+        .btn.danger:hover { background: #f85149; }
+        #dynamic-container { min-height: 100px; }
+        .injected-label {
+            display: inline-block; background: #f0883e33; color: #f0883e;
+            padding: 2px 10px; border-radius: 4px; font-size: 0.75rem;
+            margin-bottom: 4px;
+        }
+        .inject-block { margin-bottom: 20px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+        #counter { color: #8b949e; margin-bottom: 16px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 07: Dynamic Inject</h1>
+        <p class="desc">จำลองสถานการณ์จริง (SPA / Chat App) — กดปุ่มเพื่อฉีดบล็อกโค้ดใหม่เข้า DOM แล้วสั่งไฮไลต์</p>
+
+        <div class="btn-row">
+            <button class="btn" onclick="injectCode('javascript')">➕ เพิ่มโค้ด JavaScript</button>
+            <button class="btn secondary" onclick="injectCode('python')">➕ เพิ่มโค้ด Python</button>
+            <button class="btn secondary" onclick="injectCode('sql')">➕ เพิ่มโค้ด SQL</button>
+            <button class="btn danger" onclick="clearAll()">🗑️ ล้างทั้งหมด</button>
+            <button class="btn" style="background:#6e40c9" onclick="runTests()">🧪 รันทดสอบ</button>
+        </div>
+
+        <div id="counter">บล็อกที่ฉีดแล้ว: 0</div>
+        <div id="dynamic-container"></div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br><span class="pass">กดปุ่มเพิ่มโค้ดก่อน แล้วกดปุ่มรันทดสอบ</span><br></div>
+    </div>
+
+    <script src="../hideko-code-block.umd.js"></script>
+
+    <script>
+        const highlighter = window.HidekoCodeBlock || window.HidekoHighlight;
+        const container = document.getElementById('dynamic-container');
+        const counterEl = document.getElementById('counter');
+        let injectCount = 0;
+
+        const snippets = {
+            javascript: `// Dynamic inject #${Date.now()}
+const fetchData = async (url) => {
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        return data.filter(item => item.active);
+    } catch (err) {
+        console.error('Fetch failed:', err.message);
+        return [];
+    }
+};`,
+            python: `# Dynamic inject #${Date.now()}
+import pandas as pd
+
+def analyze(df: pd.DataFrame) -> dict:
+    """Analyze dataframe and return summary statistics."""
+    summary = {
+        'rows': len(df),
+        'columns': list(df.columns),
+        'mean': df.select_dtypes(include='number').mean().to_dict(),
+        'nulls': df.isnull().sum().to_dict()
+    }
+    return summary`,
+            sql: `-- Dynamic inject #${Date.now()}
+WITH monthly_sales AS (
+    SELECT
+        DATE_TRUNC('month', sale_date) AS month,
+        product_id,
+        SUM(quantity * price) AS revenue
+    FROM sales
+    GROUP BY 1, 2
+)
+SELECT month, product_id, revenue,
+    LAG(revenue) OVER (PARTITION BY product_id ORDER BY month) AS prev_month
+FROM monthly_sales
+ORDER BY month DESC;`
+        };
+
+        async function injectCode(lang) {
+            injectCount++;
+            const code = snippets[lang].replace(/#\d+/, `#${injectCount}`);
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'inject-block';
+            wrapper.innerHTML = `
+                <span class="injected-label">🔥 Dynamic #${injectCount} — ${lang}</span>
+                <pre><code class="language-${lang}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+            `;
+            container.appendChild(wrapper);
+
+            // Highlight the newly injected element
+            const codeEl = wrapper.querySelector('pre code');
+            await highlighter.highlightElement(codeEl, {
+                theme: 'monokai',
+                basePath: '../languages/'
+            });
+
+            counterEl.textContent = `บล็อกที่ฉีดแล้ว: ${injectCount}`;
+        }
+
+        function clearAll() {
+            container.innerHTML = '';
+            injectCount = 0;
+            counterEl.textContent = 'บล็อกที่ฉีดแล้ว: 0';
+        }
+
+        function runTests() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<strong>🧪 ผลการทดสอบ:</strong><br>';
+
+            function assert(name, condition) {
+                const icon = condition ? '✅' : '❌';
+                const cls = condition ? 'pass' : 'fail';
+                results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+            }
+
+            const blocks = container.querySelectorAll('.inject-block');
+            assert(`มีบล็อกที่ฉีดแล้ว ${blocks.length} บล็อก`, blocks.length > 0);
+
+            blocks.forEach((block, i) => {
+                const code = block.querySelector('code');
+                const hasTokens = code && code.innerHTML.includes('mtk');
+                assert(`บล็อก #${i + 1}: มี Token สีไฮไลต์`, hasTokens);
+            });
+
+            // Test double-processing prevention
+            const processed = container.querySelectorAll('[data-hideko-processed="true"]');
+            assert(`${processed.length} elements มี data-hideko-processed`, processed.length === blocks.length);
+
+            // Try re-highlighting — should NOT double-process
+            const firstCode = container.querySelector('code');
+            if (firstCode) {
+                const htmlBefore = firstCode.innerHTML;
+                highlighter.highlightElement(firstCode, { theme: 'monokai', basePath: '../languages/' }).then(() => {
+                    const htmlAfter = firstCode.innerHTML;
+                    assert('ไม่ถูกประมวลผลซ้ำ (double-process prevention)', htmlBefore === htmlAfter);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

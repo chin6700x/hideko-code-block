@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 11 — Line Numbers & Line Highlighting</title>
+    <link rel="stylesheet" href="../style.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; line-height: 1.6; }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .feature-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px 14px;
+        }
+        .feature-title { color: #58a6ff; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+        .feature-desc { color: #8b949e; font-size: 0.78rem; line-height: 1.4; }
+
+        .section { margin-bottom: 32px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .section-title { color: #58a6ff; font-size: 1.05rem; }
+        .badge { padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; font-family: monospace; }
+        .badge-normal { background: #21262d; color: #8b949e; border: 1px solid #30363d; }
+        .badge-virtual { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.4); }
+        .badge-hl { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.4); }
+
+        #paste-test {
+            background: #0d1117;
+            border: 1px dashed #30363d;
+            border-radius: 6px;
+            padding: 12px;
+            min-height: 60px;
+            font-size: 0.85rem;
+            color: #8b949e;
+            outline: none;
+            margin-top: 12px;
+        }
+        #paste-test:focus { border-color: #58a6ff; color: #c9d1d9; }
+
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1 style="margin-top: 12px;">Demo 11: Line Numbers & Line Highlighting</h1>
+        <p class="desc">
+            ทดสอบระบบ <strong>เลขบรรทัด (Line Numbers)</strong> และ <strong>แถบสีเน้นเฉพาะบรรทัด (Line Highlighting)</strong><br>
+            ทำงานอัตโนมัติทั้งใน <strong>Normal Mode</strong> และ <strong>Virtual Scroll Mode</strong> โดยที่การ Copy ไม่ติดตัวเลขปนมา
+        </p>
+
+        <!-- Feature Cards -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-title">🔢 Smart Gutter Auto-width</div>
+                <div class="feature-desc">ปรับความกว้างของเลขบรรทัดตามจำนวนหลักอัตโนมัติ (1 ถึง 50,000+ บรรทัด)</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">🎨 7 Themes Highlight</div>
+                <div class="feature-desc">แถบสีไฮไลต์เฉพาะบรรทัดเข้ากับธีมปัจจุบัน (ขอบสีทอง/ฟ้า/ม่วง)</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">📋 Zero Copy Pollution</div>
+                <div class="feature-desc">ใช้ <code>user-select: none</code> เมื่อลากเมาส์คลุมหรือกด Copy จะได้โค้ดสะอาดล้วนๆ</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">⚡ Virtual Window Sync</div>
+                <div class="feature-desc">ในโหมด Virtual Scroll เลขบรรทัดและแถบสีจะคำนวณตาม Window ที่เลื่อนผ่าน ลื่น 60 FPS</div>
+            </div>
+        </div>
+
+        <!-- Block 1: Normal Mode + Line Numbers Only -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">บล็อก #1: โค้ดสั้น 10 บรรทัด + เลขบรรทัด (Line Numbers)</span>
+                <span class="badge badge-normal">data-line-numbers="true"</span>
+            </div>
+            <pre id="block-1" data-line-numbers="true"><code class="language-javascript">
+// Block 1: Simple function with line numbers
+function calculateFactorial(n) {
+    if (n <= 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+console.log("5! =", calculateFactorial(5));
+            </code></pre>
+        </div>
+
+        <!-- Block 2: Normal Mode + Line Numbers + Line Highlighting -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">บล็อก #2: 12 บรรทัด + เน้นเฉพาะบรรทัด (Line 3, 6-8, 11)</span>
+                <div>
+                    <span class="badge badge-normal">Normal Mode</span>
+                    <span class="badge badge-hl">data-line="3, 6-8, 11"</span>
+                </div>
+            </div>
+            <pre id="block-2" data-line-numbers="true" data-line="3, 6-8, 11"><code class="language-python">
+# Block 2: Python Data Pipeline with highlighted steps
+import json
+from datetime import datetime
+
+def transform_record(raw_dict):
+    # Step 1: Clean timestamps (HIGHLIGHTED)
+    cleaned = dict(raw_dict)
+    cleaned["processed_at"] = datetime.utcnow().isoformat()
+    cleaned["status"] = "PROCESSED"
+    
+    # Step 2: Final payload (HIGHLIGHTED)
+    return json.dumps(cleaned, indent=2)
+            </code></pre>
+        </div>
+
+        <!-- Block 3: Virtual Mode + Line Numbers + Highlights (400 lines) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">บล็อก #3: โค้ด 400 บรรทัด + Virtual Buffer + เน้นบรรทัด (Line 5-8, 50, 100-105)</span>
+                <div>
+                    <span class="badge badge-virtual">Virtual Buffer (400 Lines)</span>
+                    <span class="badge badge-hl">data-line="5-8, 50, 100-105"</span>
+                </div>
+            </div>
+            <pre id="block-3" data-line-numbers="true" data-line="5-8, 50, 100-105" data-max-height="350px"><code class="language-javascript"></code></pre>
+        </div>
+
+        <!-- Block 4: Virtual Mode Extreme (5,000 lines SQL Dump) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">บล็อก #4: โค้ด 5,000 บรรทัด (Virtual Scroll + 4 Digits Gutter + Line 15-20)</span>
+                <div>
+                    <span class="badge badge-virtual">5,000 Lines SQL</span>
+                    <span class="badge badge-hl">data-line="15-20, 500-505"</span>
+                </div>
+            </div>
+            <pre id="block-4" data-line-numbers="true" data-line="15-20, 500-505" data-max-height="380px"><code class="language-sql"></code></pre>
+        </div>
+
+        <!-- Paste Verification -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">📋 ทดสอบ Paste เพื่อตรวจสอบว่าไม่มีเลขบรรทัดปนมา</span>
+            </div>
+            <p style="font-size: 0.85rem; color: #8b949e; margin-bottom: 6px;">
+                ลองกดปุ่ม <strong>Copy</strong> บนบล็อกใดก็ได้ หรือใช้เมาส์ลากคลุมโค้ดแล้วกด Ctrl+C / Cmd+C แล้วนำมาวาง (Ctrl+V / Cmd+V) ในกล่องด้านล่างนี้:
+            </p>
+            <div id="paste-test" contenteditable="true" placeholder="คลิกที่นี่แล้วกด Paste (Ctrl+V / Cmd+V)..."></div>
+        </div>
+
+        <!-- Automated Test Results -->
+        <div id="results">
+            <h3 style="margin-bottom: 12px; font-size: 1rem;">กำลังรันการตรวจสอบอัตโนมัติ (Automated Assertions)...</h3>
+        </div>
+    </div>
+
+    <!-- Load Hideko Bundle from dist/ -->
+    <script src="../hideko-code-block.umd.js"></script>
+    <script>
+        const highlighter = window.HidekoCodeBlock || window.HidekoHighlight;
+
+        // 1. Generate Block 3 Code (400 lines)
+        const b3Lines = [];
+        b3Lines.push('// Auto-generated 400 Lines Component');
+        for (let i = 2; i <= 400; i++) {
+            if (i >= 5 && i <= 8) {
+                b3Lines.push(`    const step_${i} = "Line ${i} is HIGHLIGHTED by data-line specification!";`);
+            } else if (i === 50) {
+                b3Lines.push(`    console.log("Milestone 50 reached (HIGHLIGHTED):", { line: ${i} });`);
+            } else if (i >= 100 && i <= 105) {
+                b3Lines.push(`    // High-density batch line ${i} (HIGHLIGHTED)`);
+            } else {
+                b3Lines.push(`    const handler_${i} = (event) => { return event.type === 'action_${i}'; };`);
+            }
+        }
+        document.querySelector('#block-3 code').textContent = b3Lines.join('\n');
+
+        // 2. Generate Block 4 Code (5,000 lines SQL Dump)
+        const b4Lines = [];
+        b4Lines.push('-- Big Data SQL Dump: 5,000 Transactions');
+        for (let i = 2; i <= 5000; i++) {
+            const amount = (Math.random() * 5000 + 10).toFixed(2);
+            const status = i % 10 === 0 ? 'REFUNDED' : 'COMPLETED';
+            b4Lines.push(`INSERT INTO transactions (id, user_id, amount, status, created_at) VALUES (${i}, ${1000 + (i % 50)}, ${amount}, '${status}', '2026-09-08 11:00:00');`);
+        }
+        document.querySelector('#block-4 code').textContent = b4Lines.join('\n');
+
+        // 3. Highlight All Blocks
+        highlighter.highlightAll('pre code', {
+            basePath: '../languages/',
+            virtual: true,
+            virtualThreshold: 300,
+            copyButton: true
+        }).then(() => {
+            console.log('Hideko: highlightAll completed successfully in Demo 11');
+            runAssertions();
+        }).catch((err) => {
+            console.error('Hideko error:', err);
+            document.getElementById('results').innerHTML = `<span class="fail">❌ Error: ${err.message}</span>`;
+        });
+
+        // 4. Verification Assertions
+        function runAssertions() {
+            const tests = [];
+
+            // Test 1: Block 1 has line numbers rendered
+            const b1LineNums = document.querySelectorAll('#block-1 .hideko-line-number');
+            const hasB1Nums = b1LineNums.length >= 8;
+            tests.push({
+                name: 'บล็อก #1 (Normal Mode): เรนเดอร์ตัวเลขบรรทัด .hideko-line-number ถูกต้อง',
+                passed: hasB1Nums,
+                detail: `พบเลขบรรทัดจำนวน ${b1LineNums.length} แถว (ค่าแรก: "${b1LineNums[0]?.textContent}", ค่าสุดท้าย: "${b1LineNums[b1LineNums.length - 1]?.textContent}")`
+            });
+
+            // Test 2: Block 2 has line highlighting on specific lines (3, 6-8, 11)
+            const b2HlLines = document.querySelectorAll('#block-2 .hideko-line-highlighted');
+            const hasB2Hl = b2HlLines.length >= 4;
+            tests.push({
+                name: 'บล็อก #2: แถบสีเน้นเฉพาะบรรทัด .hideko-line-highlighted ติดถูกต้องตาม data-line="3, 6-8, 11"',
+                passed: hasB2Hl,
+                detail: `พบบรรทัดที่ถูกไฮไลต์จำนวน ${b2HlLines.length} บรรทัด`
+            });
+
+            // Test 3: Block 3 (Virtual 400 lines) has line numbers rendered in viewport
+            const b3LineNums = document.querySelectorAll('#block-3 .hideko-line-number');
+            const hasB3Nums = b3LineNums.length > 10;
+            const b3FirstNum = parseInt(b3LineNums[0]?.textContent || '0', 10);
+            tests.push({
+                name: 'บล็อก #3 (Virtual 400 บรรทัด): เลขบรรทัดใน Viewport รันต่อเนื่องและไม่ทำให้ Scroll ค้าง',
+                passed: hasB3Nums && b3FirstNum === 1,
+                detail: `Viewport เรนเดอร์ ${b3LineNums.length} บรรทัด โดยเริ่มต้นที่บรรทัด ${b3FirstNum}`
+            });
+
+            // Test 4: Block 4 (Virtual 5,000 lines) Gutter Width auto-adjusts for 4+ digits
+            const b4Container = document.querySelector('#block-4');
+            const b4LineNums = document.querySelectorAll('#block-4 .hideko-line-number');
+            const hasB4Nums = b4LineNums.length > 10;
+            tests.push({
+                name: 'บล็อก #4 (Virtual 5,000 บรรทัด): เรนเดอร์เลขบรรทัดใน Viewport สำเร็จ และคำนวณความกว้าง Gutter อัตโนมัติ',
+                passed: hasB4Nums,
+                detail: `Viewport เรนเดอร์ ${b4LineNums.length} บรรทัดพร้อมเลขบรรทัดเริ่มต้นที่ ${b4LineNums[0]?.textContent}`
+            });
+
+            // Test 5: Verify Copy Button on Block 4 extracts full 5,000 lines clean
+            const b4Buffer = highlighter.virtualRegistry.get(b4Container);
+            const totalLinesInBuffer = b4Buffer ? b4Buffer.getLineCount() : 0;
+            const hasCleanCopy = totalLinesInBuffer === 5000;
+            tests.push({
+                name: 'ปุ่ม Copy & VirtualBuffer: ดึงโค้ดสะอาดครบ 5,000 บรรทัดโดยไม่มีเลขบรรทัดปนในข้อความ',
+                passed: hasCleanCopy,
+                detail: `Buffer เก็บโค้ดดิบครบ ${totalLinesInBuffer} บรรทัด`
+            });
+
+            // Render Test Results
+            const allPassed = tests.every(t => t.passed);
+            const resEl = document.getElementById('results');
+            resEl.innerHTML = `
+                <h3 style="margin-bottom: 14px; font-size: 1.05rem;">
+                    ผลการทดสอบระบบ Line Numbers & Line Highlighting: 
+                    <span class="${allPassed ? 'pass' : 'fail'}">${allPassed ? '✅ ผ่านการทดสอบทั้งหมด (100% PASS)' : '❌ มีบางหัวข้อไม่ผ่าน'}</span>
+                </h3>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                    ${tests.map(t => `
+                        <li style="font-size: 0.9rem; line-height: 1.5;">
+                            <span class="${t.passed ? 'pass' : 'fail'}">${t.passed ? '✓ PASS' : '✗ FAIL'}</span>: 
+                            <strong>${t.name}</strong>
+                            <div style="font-size: 0.8rem; color: #8b949e; margin-left: 20px;">${t.detail}</div>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>

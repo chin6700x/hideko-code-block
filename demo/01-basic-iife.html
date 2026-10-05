@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 01 — Basic IIFE</title>
+    <link rel="stylesheet" href="../dist/style.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #58a6ff;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            color: #8b949e;
+            margin-bottom: 24px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section h2 {
+            color: #3fb950;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 8px;
+        }
+
+        .back {
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        #results {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .pass {
+            color: #3fb950;
+        }
+
+        .fail {
+            color: #f85149;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 01: Basic IIFE</h1>
+        <p class="desc">ทดสอบโหลด <code>dist/hideko-code-block.umd.js</code> แบบแท็ก &lt;script&gt; ธรรมดา (UMD/IIFE) — ตัวแปร <code>window.HidekoCodeBlock</code> และ <code>window.HidekoHighlight</code> ต้องพร้อมใช้งานทันที</p>
+
+        <div class="section">
+            <h2>JavaScript</h2>
+            <pre data-line-numbers="true"><code class="language-javascript">
+import { useState, useEffect } from 'react';
+
+export function App({ title = "Hideko" }) {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        console.log(`Count updated: ${count}`);
+        document.title = `${title} - ${count}`;
+    }, [count, title]);
+    const handleClick = () => setCount(prev => prev + 1);
+
+    return (
+        &lt;div className="app"&gt;
+            &lt;h1&gt;{title}&lt;/h1&gt;
+            &lt;button onClick={handleClick}&gt;
+                Clicked {count} times
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+        </div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+    </div>
+
+    <!-- โหลดแบบ UMD/IIFE -->
+    <script src="../dist/hideko-code-block.umd.js"></script>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function assert(name, condition) {
+            const icon = condition ? '✅' : '❌';
+            const cls = condition ? 'pass' : 'fail';
+            results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+        }
+
+        // Test
+        assert('window.HidekoCodeBlock exists', typeof window.HidekoCodeBlock === 'object');
+        assert('window.HidekoHighlight exists (alias)', typeof window.HidekoHighlight === 'object');
+        assert('HidekoCodeBlock.highlightAll is function', typeof HidekoCodeBlock.highlightAll === 'function');
+        assert('HidekoCodeBlock.highlight is function', typeof HidekoCodeBlock.highlight === 'function');
+        assert('HidekoCodeBlock.version is "1.0.0"', HidekoCodeBlock.version === '1.0.0');
+
+        // Run highlightAll
+        HidekoCodeBlock.highlightAll('pre code', {
+            basePath: '../dist/languages/'
+        }).then(() => {
+            const codeEl = document.querySelector('pre code');
+            const html = codeEl.innerHTML;
+            assert('Token class .mtk5 (keyword) found', html.includes('mtk5'));
+            assert('Token class .mtk7 (string) found', html.includes('mtk7'));
+            assert('Token class .mtk11 (identifier) found', html.includes('mtk11'));
+            assert('data-hideko-processed="true" set', codeEl.parentElement.getAttribute('data-hideko-processed') === 'true' || codeEl.getAttribute('data-hideko-processed') === 'true');
+            assert('data-theme attribute set', codeEl.parentElement.getAttribute('data-theme') !== null);
+        });
+    </script>
+</body>
+
+</html>

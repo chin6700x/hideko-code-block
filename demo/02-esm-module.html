@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 02 — ESM Module</title>
+    <link rel="stylesheet" href="../dist/style.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; }
+        .section { margin-bottom: 32px; }
+        .section h2 { color: #3fb950; font-size: 1.1rem; margin-bottom: 12px; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 02: ESM Module</h1>
+        <p class="desc">ทดสอบโหลด <code>dist/hideko-code-block.js</code> แบบ ES Module ผ่าน <code>&lt;script type="module"&gt;</code> และ Dynamic Import ภาษา</p>
+
+        <div class="section">
+            <h2>Python (โหลดผ่าน dynamic import)</h2>
+            <pre id="python-block"><code class="language-python">
+# Neural Network Implementation
+import numpy as np
+from dataclasses import dataclass
+
+@dataclass
+class NeuralNetwork:
+    layers: list
+    learning_rate: float = 0.001
+
+    def forward(self, x: np.ndarray) -> np.ndarray:
+        """Forward propagation through all layers."""
+        activation = x
+        for layer in self.layers:
+            activation = layer.activate(activation)
+        return activation
+
+    def train(self, data, epochs=100):
+        for epoch in range(epochs):
+            loss = self._compute_loss(data)
+            if epoch % 10 == 0:
+                print(f"Epoch {epoch}: loss = {loss:.4f}")
+            </code></pre>
+        </div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+    </div>
+
+    <script type="module">
+        import { highlight, highlightAll, registerLanguage } from '../dist/hideko-code-block.js';
+
+        const results = document.getElementById('results');
+        function assert(name, condition) {
+            const icon = condition ? '✅' : '❌';
+            const cls = condition ? 'pass' : 'fail';
+            results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+        }
+
+        // Test ESM exports
+        assert('ESM: highlight is function', typeof highlight === 'function');
+        assert('ESM: highlightAll is function', typeof highlightAll === 'function');
+        assert('ESM: registerLanguage is function', typeof registerLanguage === 'function');
+
+        // Dynamic import language
+        try {
+            const pyMod = await import('../dist/languages/python.js');
+            assert('Dynamic import python.js succeeded', true);
+            assert('python.js has language export', pyMod.language !== undefined || (pyMod.default && pyMod.default.language !== undefined));
+        } catch (e) {
+            assert('Dynamic import python.js succeeded', false);
+        }
+
+        // Run highlightAll
+        await highlightAll('pre code', { basePath: '../dist/languages/' });
+
+        const codeEl = document.querySelector('#python-block code');
+        const html = codeEl.innerHTML;
+        assert('Token class .mtk5 (keyword: import/def/class) found', html.includes('mtk5'));
+        assert('Token class .mtk7 (string) found', html.includes('mtk7'));
+        assert('Token class .mtk4 (comment) found', html.includes('mtk4'));
+        assert('data-theme attribute set on pre', codeEl.parentElement.getAttribute('data-theme') !== null);
+    </script>
+</body>
+</html>

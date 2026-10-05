@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 05 — Auto Scanner</title>
+    <link rel="stylesheet" href="../dist/style.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; }
+        .test-block { margin-bottom: 28px; }
+        .test-label {
+            display: inline-block; background: #238636; color: #fff;
+            padding: 4px 14px; border-radius: 6px 6px 0 0;
+            font-size: 0.8rem; font-weight: 600;
+        }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 05: Auto Scanner</h1>
+        <p class="desc">ทดสอบ <code>highlightAll()</code> สแกน DOM อัตโนมัติ — รองรับทุกรูปแบบ: class, data-lang, h-lang, .hideko</p>
+
+        <!-- Pattern 1: <pre><code class="language-xxx"> -->
+        <div class="test-block">
+            <span class="test-label">Pattern 1: &lt;pre&gt;&lt;code class="language-javascript"&gt;</span>
+            <pre id="p1"><code class="language-javascript">const greeting = "Hello World";
+console.log(greeting);</code></pre>
+        </div>
+
+        <!-- Pattern 2: <pre class="language-xxx"> -->
+        <div class="test-block">
+            <span class="test-label">Pattern 2: &lt;pre class="language-python"&gt;</span>
+            <pre id="p2" class="language-python"><code>def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Hideko"))</code></pre>
+        </div>
+
+        <!-- Pattern 3: <div data-lang="xxx"> -->
+        <div class="test-block">
+            <span class="test-label">Pattern 3: &lt;div data-lang="sql"&gt;</span>
+            <div id="p3" data-lang="sql">SELECT id, name, email
+FROM users
+WHERE active = true
+ORDER BY created_at DESC;</div>
+        </div>
+
+        <!-- Pattern 4: <div h-lang="xxx"> -->
+        <div class="test-block">
+            <span class="test-label">Pattern 4: &lt;div h-lang="css"&gt;</span>
+            <div id="p4" h-lang="css">.button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+}</div>
+        </div>
+
+        <!-- Pattern 5: <pre><code class="lang-xxx"> (prefix lang-) -->
+        <div class="test-block">
+            <span class="test-label">Pattern 5: &lt;code class="lang-go"&gt; (prefix lang-)</span>
+            <pre id="p5"><code class="lang-go">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello from Go!")
+}</code></pre>
+        </div>
+
+        <!-- Pattern 6: <div class="hideko" data-lang="json"> -->
+        <div class="test-block">
+            <span class="test-label">Pattern 6: &lt;div class="hideko" data-lang="json"&gt;</span>
+            <div id="p6" class="hideko" data-lang="json">{
+    "name": "hideko",
+    "version": "1.0.0",
+    "fast": true,
+    "size_kb": 14.08
+}</div>
+        </div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+    </div>
+
+    <script src="../dist/hideko-code-block.umd.js"></script>
+
+    <script>
+        const results = document.getElementById('results');
+        function assert(name, condition) {
+            const icon = condition ? '✅' : '❌';
+            const cls = condition ? 'pass' : 'fail';
+            results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+        }
+
+        const highlighter = window.HidekoCodeBlock || window.HidekoHighlight;
+        highlighter.highlightAll(
+            'pre code, pre[class*="language-"], div[data-lang], div[h-lang], .hideko',
+            { basePath: '../dist/languages/' }
+        ).then(() => {
+            const patterns = [
+                { id: 'p1', name: 'Pattern 1: <pre><code class="language-javascript">', check: 'code' },
+                { id: 'p2', name: 'Pattern 2: <pre class="language-python">', check: 'code' },
+                { id: 'p3', name: 'Pattern 3: <div data-lang="sql">', check: 'self' },
+                { id: 'p4', name: 'Pattern 4: <div h-lang="css">', check: 'self' },
+                { id: 'p5', name: 'Pattern 5: <code class="lang-go">', check: 'code' },
+                { id: 'p6', name: 'Pattern 6: <div class="hideko" data-lang="json">', check: 'self' },
+            ];
+
+            patterns.forEach(p => {
+                const el = document.getElementById(p.id);
+                const target = p.check === 'code' ? (el.querySelector('code') || el) : el;
+                const html = target.innerHTML;
+                const hasTokens = html.includes('mtk');
+                assert(p.name, hasTokens);
+            });
+
+            // Check processed count
+            const processed = document.querySelectorAll('[data-hideko-processed="true"]');
+            assert(`ทั้งหมด ${processed.length} elements ถูกประมวลผล`, processed.length >= 6);
+        });
+    </script>
+</body>
+</html>

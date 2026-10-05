@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 04 — Multi Languages</title>
+    <link rel="stylesheet" href="../style.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; }
+        .desc { color: #8b949e; margin-bottom: 24px; }
+        .lang-section { margin-bottom: 28px; }
+        .lang-label {
+            display: inline-block; background: #1f6feb33; color: #58a6ff;
+            padding: 4px 14px; border-radius: 6px 6px 0 0;
+            font-size: 0.85rem; font-weight: 600; border: 1px solid #1f6feb55;
+            border-bottom: none;
+        }
+        .back { color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { text-decoration: underline; }
+        #results { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 24px; }
+        .pass { color: #3fb950; } .fail { color: #f85149; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← กลับหน้ารวม Demo</a>
+        <h1>Demo 04: Multi Languages</h1>
+        <p class="desc">ทดสอบโหลดและไฮไลต์หลายภาษาพร้อมกัน — ตรวจสอบว่าแต่ละภาษาแยก Token สีได้ถูกต้อง</p>
+
+        <div class="lang-section">
+            <span class="lang-label">JavaScript</span>
+            <pre data-theme="dracula"><code class="language-javascript">
+const express = require('express');
+const app = express();
+
+app.get('/api/users', async (req, res) => {
+    const users = await User.findAll({ where: { active: true } });
+    res.json({ success: true, data: users });
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">Python</span>
+            <pre data-theme="dracula"><code class="language-python">
+from flask import Flask, jsonify
+import asyncio
+
+app = Flask(__name__)
+
+class DataProcessor:
+    def __init__(self, threshold: float = 0.85):
+        self.threshold = threshold
+        self._cache = {}
+
+    async def process(self, items: list[dict]) -> list:
+        """Process items concurrently with caching."""
+        results = await asyncio.gather(
+            *[self._transform(item) for item in items]
+        )
+        return [r for r in results if r['score'] >= self.threshold]
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">SQL</span>
+            <pre data-theme="dracula"><code class="language-sql">
+-- Monthly revenue report with window functions
+SELECT
+    DATE_TRUNC('month', order_date) AS month,
+    category,
+    SUM(amount) AS total_revenue,
+    COUNT(DISTINCT customer_id) AS unique_customers,
+    ROUND(AVG(amount), 2) AS avg_order,
+    RANK() OVER (PARTITION BY DATE_TRUNC('month', order_date) ORDER BY SUM(amount) DESC) AS rank
+FROM orders
+WHERE order_date >= '2026-01-01'
+    AND status NOT IN ('cancelled', 'refunded')
+GROUP BY 1, 2
+HAVING SUM(amount) > 1000
+ORDER BY month DESC, rank ASC
+LIMIT 50;
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">CSS</span>
+            <pre data-theme="dracula"><code class="language-css">
+:root {
+    --primary: #58a6ff;
+    --bg-dark: #0d1117;
+}
+
+.card {
+    background: linear-gradient(135deg, var(--bg-dark), #161b22);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(88, 166, 255, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+    body { background: var(--bg-dark); color: #c9d1d9; }
+}
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">HTML</span>
+            <pre data-theme="dracula"><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header class="main-header"&gt;
+        &lt;nav&gt;
+            &lt;a href="/" class="logo"&gt;Hideko&lt;/a&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/docs"&gt;Docs&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/demo"&gt;Demo&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">JSON</span>
+            <pre data-theme="dracula"><code class="language-json">
+{
+    "name": "lite-hideko-max-line",
+    "version": "1.0.0",
+    "description": "Ultra-lightweight Syntax Highlighter",
+    "keywords": ["syntax", "highlighter", "fast"],
+    "dependencies": {},
+    "config": {
+        "themes": ["dark", "light", "dracula"],
+        "maxLines": 50000,
+        "enabled": true,
+        "ratio": 3.14
+    }
+}
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">Rust</span>
+            <pre data-theme="dracula"><code class="language-rust">
+use std::collections::HashMap;
+
+#[derive(Debug, Clone)]
+struct Config {
+    name: String,
+    max_retries: u32,
+    timeout_ms: u64,
+}
+
+impl Config {
+    fn new(name: &str) -> Self {
+        Config {
+            name: name.to_string(),
+            max_retries: 3,
+            timeout_ms: 5000,
+        }
+    }
+
+    fn with_timeout(mut self, ms: u64) -> Self {
+        self.timeout_ms = ms;
+        self
+    }
+}
+
+fn main() {
+    let config = Config::new("production").with_timeout(10000);
+    println!("Config: {:?}", config);
+}
+            </code></pre>
+        </div>
+
+        <div class="lang-section">
+            <span class="lang-label">Go</span>
+            <pre data-theme="dracula"><code class="language-go">
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "encoding/json"
+)
+
+type Response struct {
+    Status  string      `json:"status"`
+    Data    interface{} `json:"data"`
+    Message string      `json:"message,omitempty"`
+}
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+    resp := Response{Status: "ok", Data: map[string]int{"uptime": 99}}
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(resp)
+}
+
+func main() {
+    http.HandleFunc("/health", healthHandler)
+    fmt.Println("Server listening on :8080")
+    http.ListenAndServe(":8080", nil)
+}
+            </code></pre>
+        </div>
+
+        <div id="results"><strong>🧪 ผลการทดสอบ:</strong><br></div>
+    </div>
+
+    <script src="../hideko-code-block.umd.js"></script>
+
+    <script>
+        const results = document.getElementById('results');
+        function assert(name, condition) {
+            const icon = condition ? '✅' : '❌';
+            const cls = condition ? 'pass' : 'fail';
+            results.innerHTML += `<span class="${cls}">${icon} ${name}</span><br>`;
+        }
+
+        const highlighter = window.HidekoCodeBlock || window.HidekoHighlight;
+        highlighter.highlightAll('pre code', { basePath: '../languages/' }).then(() => {
+            const langs = ['javascript', 'python', 'sql', 'css', 'html', 'json', 'rust', 'go'];
+            langs.forEach(lang => {
+                const el = document.querySelector(`code.language-${lang}`);
+                if (el) {
+                    const hasTokens = el.innerHTML.includes('mtk');
+                    assert(`${lang}: มี Token สีไฮไลต์`, hasTokens);
+                    const isPlainText = el.innerHTML === el.textContent;
+                    assert(`${lang}: ไม่ใช่ plain text`, !isPlainText);
+                } else {
+                    assert(`${lang}: element found`, false);
+                }
+            });
+            assert(`ทุกภาษาถูกประมวลผล (${langs.length} ภาษา)`, true);
+        });
+    </script>
+</body>
+</html>

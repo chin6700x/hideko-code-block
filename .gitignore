@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+# 1. สร้าง Git Repository ในโฟลเดอร์
+git init
+# 2. เพิ่มไฟล์ทั้งหมดเข้าสู่ Staging (node_modules จะถูกข้ามอัตโนมัติตาม .gitignore)
+git add .
+# 3. ตรวจสอบสถานะว่าไม่มี node_modules ติดมา
+git status
+# 4. ทำการ Commit แรก
+git commit -m "feat: initial release of hideko-code-block v1.0.0"
+# 5. เปลี่ยนชื่อกิ่งเป็น main
+git branch -M main
+# 6. เชื่อมต่อกับ Repository บน GitHub ของคุณ (แทนที่ <username> ด้วยชื่อ GitHub ของคุณ)
+git remote add origin https://github.com/chin6700x/hideko-code-block.git
+# 7. Push ขึ้น GitHub
+git push -u origin main
